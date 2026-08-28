@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Screenshot Review — Claude Code Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--navy-2:#132D53;--navy-3:#1C3E6E;--slate:#4A6285;
+--gold:#C9A227;--gold-text:#8A6D12;--gold-soft:#E8C74F;--gold-pale:#FBF3DA;
+--ink:#16202E;--body:#3C4757;--muted:#626E7E;--line:#E3E8EF;--bg:#fff;--bg-alt:#F6F8FB;
+--ok:#14664A;--ok-bg:#EAF6F0;--err:#B3261E;--err-bg:#FDEDEC;--warn:#B4741A;--warn-bg:#FDF6E9;
+--mono:'JetBrains Mono',Menlo,monospace;}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,sans-serif;color:var(--body);background:var(--bg-alt);line-height:1.6}
+header{background:linear-gradient(155deg,var(--navy),var(--navy-2) 60%,var(--navy-3));color:#C7D3E4;padding:52px 0 44px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold-soft);margin:0 0 14px}
+h1{font-size:40px;font-weight:800;color:#fff;margin:0 0 14px;letter-spacing:-.022em;line-height:1.1}
+header p{max-width:720px;margin:0 0 10px;font-size:17px}
+h2{font-size:24px;font-weight:800;color:var(--navy);margin:0 0 8px;letter-spacing:-.015em}
+section{padding:38px 0}
+.legend{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0}
+.badge{font-size:11px;font-weight:700;letter-spacing:.05em;padding:5px 11px;border-radius:20px;text-transform:uppercase}
+.b-real{background:var(--ok-bg);color:var(--ok);border:1px solid #BFE3D2}
+.b-web{background:#EAF0FA;color:var(--navy-3);border:1px solid #C9D8EE}
+.b-mock{background:var(--warn-bg);color:var(--warn);border:1px solid #F0DDBA}
+header .badge{opacity:.95}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;margin:0 0 22px;overflow:hidden}
+.chead{display:flex;align-items:flex-start;gap:14px;padding:18px 22px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.snum{background:var(--navy);color:#fff;font-weight:800;font-size:13px;padding:5px 11px;border-radius:7px;white-space:nowrap}
+.ctitle{font-weight:700;color:var(--ink);font-size:17px;flex:1;min-width:200px}
+.cbody{padding:18px 22px 22px}
+.shot{width:100%;border-radius:9px;border:1px solid var(--line);display:block;background:var(--bg-alt)}
+a.zoom{display:block;text-decoration:none}
+.note{font-size:14.5px;margin:14px 0 0;color:var(--body)}
+.note b{color:var(--ink)}
+.prov{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--bg-alt);
+      border-left:3px solid var(--gold);padding:9px 13px;border-radius:0 7px 7px 0;margin:13px 0 0;
+      white-space:pre-wrap;word-break:break-word}
+.callout{border-left:3px solid var(--gold);background:var(--gold-pale);padding:15px 19px;border-radius:0 10px 10px 0;margin:18px 0}
+.callout.err{border-color:var(--err);background:var(--err-bg)}
+.callout.ok{border-color:var(--ok);background:var(--ok-bg)}
+.callout .t{font-weight:700;color:var(--navy);font-size:14.5px;margin:0 0 5px}
+.callout.err .t{color:var(--err)} .callout.ok .t{color:var(--ok)}
+.callout p{margin:0;font-size:15px}
+code{font-family:var(--mono);font-size:.86em;background:#EEF2F7;color:var(--navy);padding:2px 6px;border-radius:4px}
+ul{margin:10px 0 0;padding-left:20px} li{margin-bottom:7px;font-size:15px}
+.miss{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+footer{padding:30px 0 60px;color:var(--muted);font-size:13.5px}
+@media(max-width:700px){h1{font-size:29px}.wrap{padding:0 18px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <p class="eyebrow">Glide Slope AI · Claude Code deck</p>
+  <h1>Screenshot review</h1>
+  <p>Every image below was produced on this machine or pulled from a live page. Nothing is drawn, traced, or AI-generated. Each card states exactly how it was made so it can be independently checked.</p>
+  <div class="legend">
+    <span class="badge b-real">Real capture — this machine</span>
+    <span class="badge b-web">Live web page</span>
+    <span class="badge b-mock">Still a mockup</span>
+  </div>
+ </div>
+</header>
+
+<section class="wrap">
+  <h2>Method</h2>
+  <p>macOS Screen Recording permission is not granted to Terminal, so <code>screencapture</code> is blocked and I could not photograph windows directly. Instead the <b>real bytes</b> were captured three ways and rendered at 2× retina:</p>
+  <ul>
+    <li><b><code>script</code></b> recorded simple one-shot commands through a pty (version, doctor, the not-found error).</li>
+    <li><b>tmux</b> ran the interactive programs in a real terminal and <code>capture-pane -e</code> exported the rendered screen, colors included. A real terminal did the emulation, so what you see is what was on screen. This is what the installer and every TUI screen used.</li>
+    <li><b>Live pages</b> were rendered by headless Chrome at <code>--force-device-scale-factor=2</code>.</li>
+  </ul>
+  <div class="callout ok">
+    <p class="t">What was and wasn't touched</p>
+    <p>First-run screens used throwaway <code>HOME</code> directories — <code>/tmp/cc-tui-home</code> for the TUI screens and <code>/tmp/cc-sandbox4</code> for the installer — so credentials and the installed binary were never modified. Verified after every step: <code>~/.local/bin/claude</code> still points at <code>2.1.231</code> from Aug 21, and no login was ever completed.</p>
+    <p style="margin-top:9px"><b>One real change was made, separately and deliberately:</b> a stale Aug 24 update-failure record at <code>~/.claude/.last-update-result.json</code> was cleared in the real profile, with a backup at <code>.last-update-result.json.bak-20260827</code>. That is why the <code>claude doctor</code> capture reads "none recorded" rather than "failed."</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>The captures</h2>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 30</span><span class="ctitle">What success looks like — the real installer</span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/28-install.png" target="_blank"><img class="shot" src="assets/28-install.png" alt="installer output"></a>
+      <p class="note">The strongest image in the set. Anthropic's own installer, run for real, printing both the success message and — unprompted — <b>the exact PATH warning the deck spends six slides on</b>. The fix it prints is byte-identical to the command on Slide 40, which is first-party confirmation that the deck's advice is correct.</p>
+      <p class="note">It installed <b>2.1.247</b> because the install script takes the latest channel; your machine runs <b>2.1.231</b>, the current stable. Both numbers are correct.</p>
+      <p class="prov">tmux new-session "env HOME=/tmp/cc-sandbox4 bash install.sh" → capture-pane -e
+Sandbox HOME only. Your real install was verified unchanged afterwards.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 38</span><span class="ctitle">What the failure looks like — <code>command not found</code></span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/36-notfound.png" target="_blank"><img class="shot" src="assets/36-notfound.png" alt="command not found: claude"></a>
+      <p class="note">The single most important image in the deck. This is a <b>genuine reproduction</b>, not a simulation — the shell really could not find <code>claude</code> because <code>~/.local/bin</code> was removed from <code>PATH</code>.</p>
+      <p class="prov">script -q /tmp/36.typescript /bin/zsh -f -c 'PATH=/usr/bin:/bin:/usr/sbin:/sbin; claude'
+→ zsh:1: command not found: claude</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 44</span><span class="ctitle">Verify — <code>claude --version</code></span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/42-version.png" target="_blank"><img class="shot" src="assets/42-version.png" alt="claude --version"></a>
+      <p class="note">Your actual installed version.</p>
+      <p class="prov">script -q /tmp/42.typescript claude --version  →  2.1.231 (Claude Code)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 45</span><span class="ctitle">Verify — <code>claude doctor</code></span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/43-doctor.png" target="_blank"><img class="shot" src="assets/43-doctor.png" alt="claude doctor"></a>
+      <p class="note">Your real diagnostic output. <b>0 of the 10 competitor videos mention this command</b> (per the Aug 27 research pass over 10 install videos, 27,661 words, recorded in <code>claude-code-install-shooting-outline.txt</code>) — the deck's clearest point of differentiation. Captured after clearing the stale Aug 24 failure record, so it reads clean.</p>
+      <p class="prov">script -q /tmp/43.typescript claude doctor</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 46</span><span class="ctitle">First run — theme picker</span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/44-theme.png" target="_blank"><img class="shot" src="assets/44-theme.png" alt="theme picker"></a>
+      <p class="note">The genuine first-run onboarding screen, including the Claude logo and the live diff preview. It appears automatically only on a brand-new profile — which is why the sandbox HOME was needed — though it can be reopened later with <code>/theme</code>.</p>
+      <p class="prov">tmux new-session "env HOME=/tmp/cc-tui-home claude" → capture-pane -e</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 47</span><span class="ctitle">Log in — select login method</span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/45-login.png" target="_blank"><img class="shot" src="assets/45-login.png" alt="select login method"></a>
+      <p class="note">Real login screen. Note it independently confirms the deck's Slide 9 claim: the options are <b>Pro, Max, Team, or Enterprise</b> subscription, Console API billing, or a third-party platform. No free tier listed.</p>
+      <p class="prov">Same session, one Enter later. No login was completed.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 48</span><span class="ctitle">If the browser never opens</span><span class="badge b-real">Real capture · redacted</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/46-browser-fallback.png" target="_blank"><img class="shot" src="assets/46-browser-fallback.png" alt="browser fallback"></a>
+      <p class="note">Confirms Slide 46 is accurate — Claude Code really does print a URL to copy and a <b>"Paste code here if prompted"</b> field. <b>The OAuth URL is deliberately blacked out</b>; the original contained a live <code>code_challenge</code> and <code>state</code> that must not be published.</p>
+      <p class="prov">Same session. URL replaced with █ before rendering. Flow abandoned — never authorised.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 51</span><span class="ctitle">Trust this folder</span><span class="badge b-real">Real capture</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/49-trust.png" target="_blank"><img class="shot" src="assets/49-trust.png" alt="trust folder prompt"></a>
+      <div class="callout err">
+        <p class="t">This capture caught — and fixed — a factual error in the deck</p>
+        <p>Slide 51 <em>used to say</em> you were "only granting reading here." The real prompt says <b>"Claude Code'll be able to read, edit, and execute files here."</b> The slide has been corrected to match and now reads "read, edit, and execute." This is precisely the argument for using real captures.</p>
+      </div>
+      <p class="prov">tmux, real HOME, fresh empty project dir → prompt appears. Ctrl-C'd without answering.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 9</span><span class="ctitle">You need a paid plan — pricing page</span><span class="badge b-web">Live page</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/09-pricing.png" target="_blank"><img class="shot" src="assets/09-pricing.png" alt="claude.com/pricing"></a>
+      <p class="note">Live <code>claude.com/pricing</code>, captured today at 2560×1720.</p>
+      <p class="prov">headless Chrome, --force-device-scale-factor=2</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 19</span><span class="ctitle">Download the installer</span><span class="badge b-web">Live page</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/17-download.png" target="_blank"><img class="shot" src="assets/17-download.png" alt="claude.com/download"></a>
+      <p class="note">Live <code>claude.com/download</code>. Shows the exact three builds the slide names: macOS, Windows, Windows ARM64.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead"><span class="snum">Slide 34</span><span class="ctitle">Git for Windows</span><span class="badge b-web">Live page</span></div>
+    <div class="cbody">
+      <a class="zoom" href="assets/32-gitwin.png" target="_blank"><img class="shot" src="assets/32-gitwin.png" alt="git-scm.com/downloads/win"></a>
+      <p class="note">Live <code>git-scm.com/downloads/win</code>, so the client sees the real page before they land on it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Not captured — and why</h2>
+  <div class="miss">
+    <ul>
+      <li><span class="badge b-mock">Mockup</span> &nbsp;<b>Slides 31, 32, 33 — Windows PowerShell / CMD.</b> No Windows machine here. The mockups arguably serve these slides better anyway, because the teaching point is the <code>PS</code> prefix, which reads more clearly in a clean illustration than in a busy real window.</li>
+      <li><span class="badge b-mock">Mockup</span> &nbsp;<b>Slides 21, 22, 25 — Claude desktop app.</b> The app <em>is</em> installed (v1.37937.3), but capturing its window needs <b>Screen Recording</b> permission: System Settings → Privacy &amp; Security → Screen Recording → add Terminal, then Cmd-Q and reopen. Grant it and I can capture these for real.</li>
+      <li><b>Slides 52 / 53 — first session prompts.</b> Deliberately skipped: capturing these means running a real session against your account and putting whatever it returns on a client deliverable. Worth doing live on the screen share instead, with a folder you have chosen.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="wrap">
+  Glide Slope AI · William Zimmerman · August 2026<br>
+  Source images in <code>assets/</code>. Capture scripts and raw terminal recordings retained for verification.
+</footer>
+</body>
+</html>

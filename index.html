@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Installing Claude Code — Glide Slope AI</title>
+<meta name="description" content="A step-by-step walkthrough for installing Claude Code. One idea per slide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1F3A; --navy-2:#132D53; --navy-3:#1C3E6E; --slate:#4A6285;
+  --gold:#C9A227; --gold-soft:#E8C74F; --gold-pale:#FBF3DA; --gold-text:#8A6D12;
+  --ink:#16202E; --body:#3C4757; --muted:#626E7E;
+  --line:#E3E8EF; --bg:#FFFFFF; --bg-alt:#F6F8FB;
+  --ok:#14664A; --ok-bg:#EAF6F0; --warn:#B4741A; --warn-bg:#FDF6E9;
+  --err:#B3261E; --err-bg:#FDEDEC;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:var(--sans);color:var(--body);background:var(--bg-alt);
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+}
+/* ---------- Chrome ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));width:0;z-index:60;transition:width .25s ease}
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 22px;z-index:50;pointer-events:none;
+}
+#topbar .brandline{pointer-events:auto;cursor:pointer;border:none;background:none;
+  font-family:var(--sans);padding:6px 10px;margin-left:-10px;border-radius:8px;transition:.16s}
+#topbar .brandline:hover{background:rgba(11,31,58,.07)}
+#nav.dark ~ #topbar .brandline:hover,.slide.dark ~ #topbar .brandline:hover{background:rgba(255,255,255,.12)}
+#topbar .brandline .home{font-size:13px;opacity:.7;margin-right:9px}
+.gslogo{width:16px;height:16px;flex:0 0 auto;margin-right:6px;position:relative;top:-1px}
+.brandcard{display:flex;align-items:center;gap:24px;margin:26px 0 0;flex-wrap:wrap}
+.brandcard img{width:196px;height:196px;border-radius:50%;flex:0 0 auto;
+  border:2px solid rgba(232,199,79,.55);box-shadow:0 4px 18px rgba(0,0,0,.28)}
+.brandcard .who{font-size:16px;line-height:1.55}
+.brandcard .who .nm{font-size:21px;font-weight:800;color:#fff;letter-spacing:-.015em;display:block;margin-bottom:2px}
+.brandcard .who .rl{color:var(--gold-soft);font-weight:650}
+.brandcard .who a{color:#C7D3E4;border-bottom-color:rgba(199,211,228,.35)}
+.gsmark{display:flex;align-items:center;gap:9px;margin:0 0 16px;
+  font-size:14px;font-weight:800;letter-spacing:.02em;color:#fff}
+.gsmark svg{width:26px;height:26px}
+.gsmark .dom{font-weight:600;color:#8FA3BE;font-size:13px}
+.dba{display:inline-block;font-size:11px;color:#8FA6C4;letter-spacing:.01em;font-weight:500;line-height:1.5;margin:2px 0 3px}
+@media(max-width:760px){.dba{font-size:10.5px}}
+@media(max-width:760px){.brandcard{gap:16px}.brandcard img{width:140px;height:140px}
+  .brandcard .who{font-size:15px}.brandcard .who .nm{font-size:19px}}
+#topbar .brandline{
+  font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;
+  color:var(--slate);display:flex;align-items:center;gap:10px;
+}
+#topbar .brandline .pip{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+#sectionlabel{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.slide.dark ~ #topbar{}
+/* ---------- Deck ---------- */
+#deck{height:100%;width:100%;position:relative}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:74px 34px 92px;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;touch-action:pan-y;
+  animation:fade .32s ease both;
+}
+.slide.on{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.inner{max-width:880px;margin:auto;width:100%}
+.slide.wide .inner{max-width:1020px}
+/* dark variant */
+.slide.dark{background:linear-gradient(155deg,var(--navy) 0%,var(--navy-2) 58%,var(--navy-3) 100%);color:#C7D3E4}
+.slide.dark h1,.slide.dark h2,.slide.dark h3{color:#fff}
+.slide.dark .eyebrow{color:var(--gold-soft)}
+.slide.dark strong{color:#fff}
+.slide.dark .lede{color:#C7D3E4}
+.slide.dark .small,.slide.dark .sub{color:#A8BAD2}
+.slide.tint{background:var(--bg-alt)}
+.slide.plain{background:#fff}
+/* ---------- Type ---------- */
+.eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold-text);margin:0 0 16px}
+h1{font-size:clamp(32px,5.2vw,56px);line-height:1.08;font-weight:800;color:var(--navy);margin:0 0 20px;letter-spacing:-.025em}
+h2{font-size:clamp(26px,3.9vw,40px);line-height:1.14;font-weight:800;color:var(--navy);margin:0 0 18px;letter-spacing:-.02em}
+h3{font-size:19px;font-weight:700;color:var(--navy);margin:26px 0 10px}
+.lede{font-size:clamp(16px,2vw,20px);line-height:1.6;color:var(--slate);margin:0 0 18px;max-width:660px}
+p{margin:0 0 14px;font-size:16.5px;line-height:1.62}
+strong{color:var(--ink);font-weight:650}
+.small{font-size:14px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.87em;background:#EEF2F7;color:var(--navy);padding:2px 6px;border-radius:4px;word-break:break-word}
+.slide.dark code{background:rgba(255,255,255,.12);color:#EAF0F8}
+a{color:var(--navy-3);text-decoration:none;border-bottom:1px solid rgba(28,62,110,.3)}
+.slide.dark a{color:var(--gold-soft);border-bottom-color:rgba(232,199,79,.4)}
+/* ---------- Bits ---------- */
+.stepnum{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border-radius:10px;background:var(--navy);color:#fff;font-weight:800;font-size:17px;margin-bottom:16px;
+}
+.slide.dark .stepnum{background:var(--gold);color:var(--navy)}
+ul.clean{list-style:none;padding:0;margin:0 0 16px}
+ul.clean li{position:relative;padding-left:28px;margin-bottom:12px;font-size:16.5px;line-height:1.55}
+ul.clean li:before{content:"";position:absolute;left:6px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+ul.check li:before{content:"✓";left:2px;top:0;width:auto;height:auto;background:none;color:var(--ok);font-weight:800;font-size:15px}
+ul.cross li:before{content:"✕";left:2px;top:0;width:auto;height:auto;background:none;color:var(--err);font-weight:800;font-size:14px}
+.callout{
+  border-left:3px solid var(--gold);background:var(--gold-pale);padding:16px 20px;border-radius:0 10px 10px 0;margin:20px 0;
+}
+.callout .t{font-weight:700;color:var(--navy);font-size:14.5px;margin:0 0 5px;letter-spacing:.01em}
+.callout p{margin:0;font-size:15.5px;color:#5A4A20}
+.callout.ok{border-color:var(--ok);background:var(--ok-bg)}
+.callout.ok .t{color:var(--ok)} .callout.ok p{color:#26584A}
+.callout.err{border-color:var(--err);background:var(--err-bg)}
+.callout.err .t{color:var(--err)} .callout.err p{color:#7A2F2A}
+.slide.dark .callout{background:rgba(232,199,79,.10);border-color:var(--gold-soft)}
+.slide.dark .callout .t{color:var(--gold-soft)} .slide.dark .callout p{color:#D7E1EE}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:8px 0 6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 22px 20px}
+.slide.tint .card{background:#fff}
+.card .tag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--gold-text);margin:0 0 9px}
+.card h3{margin:0 0 9px;font-size:20px}
+.card p{font-size:15px;margin:0 0 10px;color:var(--body)}
+.card ul.clean li{font-size:14.5px;margin-bottom:8px}
+.card.hi{border-color:var(--gold);box-shadow:0 3px 20px rgba(201,162,39,.13)}
+table{width:100%;border-collapse:collapse;margin:6px 0 14px;font-size:15px}
+th{text-align:left;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 12px 9px 0;border-bottom:1px solid var(--line)}
+td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+td:first-child{font-weight:650;color:var(--ink);white-space:nowrap}
+td code{white-space:nowrap}
+.slide.dark th{color:#8FA3BE;border-color:rgba(255,255,255,.14)}
+.slide.dark td{border-color:rgba(255,255,255,.11)}
+.slide.dark td:first-child{color:#fff}
+/* ---------- Terminal mockups ---------- */
+.term{border-radius:11px;overflow:hidden;box-shadow:0 10px 34px rgba(11,31,58,.20);margin:18px 0;border:1px solid rgba(0,0,0,.16)}
+.term-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;background:#E4E6EA;border-bottom:1px solid #CFD3D9}
+.term-bar .dot{width:11px;height:11px;border-radius:50%}
+.dot.r{background:#FF5F57} .dot.y{background:#FEBC2E} .dot.g{background:#28C840}
+.term-title{margin-left:9px;font-size:11.5px;color:#5B6470;font-weight:600;font-family:var(--sans)}
+.term-body{
+  margin:0;padding:18px 18px 20px;background:#0C1220;color:#D6DEEB;
+  font-family:var(--mono);font-size:13.5px;line-height:1.72;white-space:pre-wrap;word-break:break-word;
+}
+.term.ps .term-bar{background:#1B3A63;border-color:#12294A}
+.term.ps .term-title{color:#BBD0EA}
+.term.ps .term-bar .dot{display:none}
+.term.ps .term-bar:before{content:"";width:13px;height:13px;border-radius:3px;background:#5CA0F0;display:inline-block}
+.term.ps .term-body{background:#012456;color:#E8EEF7}
+.term-body .pr{color:#5CD6A0;font-weight:700}
+.term-body .pr2{color:#7FB3F5;font-weight:700}
+.term-body .cm{color:#FFE08A;font-weight:600}
+.term-body .ou{color:#95A3B8}
+.term-body .ok{color:#5CD6A0;font-weight:700}
+.term-body .er{color:#FF8B84;font-weight:700}
+.term-body .cur{display:inline-block;width:8px;height:16px;background:#5CD6A0;vertical-align:-3px;animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* app mockup */
+.appwin{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 34px rgba(11,31,58,.14);margin:18px 0;background:#fff}
+.appbar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#F3F5F8;border-bottom:1px solid var(--line)}
+.apptabs{display:flex;gap:4px;margin:0 auto}
+.apptab{font-size:12.5px;font-weight:650;color:var(--muted);padding:5px 15px;border-radius:7px}
+.apptab.sel{background:var(--navy);color:#fff}
+.appbody{padding:22px;min-height:120px;background:#fff}
+.approw{display:flex;align-items:center;gap:10px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
+.approw:last-child{border:none}
+.appchip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--gold-pale);color:#7A5F12;letter-spacing:.03em}
+/* command box + copy */
+.cmdbox{position:relative;background:#0C1220;border-radius:10px;padding:15px 54px 15px 17px;margin:14px 0;overflow-x:auto}
+.cmdbox pre{margin:0;font-family:var(--mono);font-size:14px;color:#FFE08A;font-weight:600;white-space:pre-wrap;word-break:break-all;line-height:1.6}
+.cmdbox .cp{
+  position:absolute;top:9px;right:9px;background:rgba(255,255,255,.10);color:#C7D3E4;border:1px solid rgba(255,255,255,.16);
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:5px 10px;border-radius:6px;cursor:pointer;transition:.16s;
+}
+.cmdbox .cp:hover{background:rgba(255,255,255,.2);color:#fff}
+.cmdbox .cp.done{background:var(--ok);border-color:var(--ok);color:#fff}
+/* big statement */
+.statement{font-size:clamp(24px,3.6vw,38px);line-height:1.28;font-weight:750;color:var(--navy);letter-spacing:-.02em;margin:0 0 18px}
+.slide.dark .statement{color:#fff}
+.kbd{display:inline-block;font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--ink);background:#fff;border:1px solid #C9D2DE;border-bottom-width:2px;border-radius:6px;padding:2px 8px;margin:0 1px}
+.slide.dark .kbd{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3)}
+.pillrow{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 4px}
+.pill{font-size:13px;font-weight:650;padding:7px 14px;border-radius:30px;background:#fff;border:1px solid var(--line);color:var(--slate)}
+.slide.dark .pill{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);color:#D7E1EE}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+.half{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.half.bad{border-color:#F2C9C5;background:var(--err-bg)}
+.half.good{border-color:#BFE3D2;background:var(--ok-bg)}
+.half .hd{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;margin:0 0 10px}
+.half.bad .hd{color:var(--err)} .half.good .hd{color:var(--ok)}
+.half p{font-size:14.5px;margin:0 0 8px}
+.half code{font-size:12.5px;background:rgba(255,255,255,.75)}
+/* light panels sitting on a dark slide must keep dark text */
+.half{color:var(--body)}
+.slide.dark .half{color:var(--body)}
+.slide.dark .half strong{color:var(--ink)}
+.slide.dark .half code{background:rgba(255,255,255,.8);color:var(--navy)}
+.slide.dark .half a{color:var(--navy-3);border-bottom-color:rgba(28,62,110,.3)}
+.slide.dark .card{color:var(--body)}
+.slide.dark .card h3{color:var(--navy)}
+.slide.dark .card strong{color:var(--ink)}
+.slide.dark .card code{background:#EEF2F7;color:var(--navy)}
+.slide.dark .card a{color:var(--navy-3);border-bottom-color:rgba(28,62,110,.3)}
+.slide.dark .appwin{color:var(--body)}
+.slide.dark .appwin strong{color:var(--ink)}
+.slide.dark .kbd{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3)}
+.slide.dark .half .kbd{background:#fff;color:var(--ink);border-color:#C9D2DE}
+.slide.dark table + .callout{}
+/* real screenshots embedded in slides */
+.shot{display:block;width:auto;max-width:100%;height:auto;max-height:31vh;
+  border-radius:10px;border:1px solid var(--line);box-shadow:0 8px 26px rgba(11,31,58,.16);margin:16px 0 8px;}
+.shot.lg{max-height:42vh}
+@media (max-height:790px){.shot.lg{max-height:37vh}}
+@media (max-height:640px){.shot.lg{max-height:31vh}}
+.slide.dark .shot{border-color:rgba(255,255,255,.16)}
+.shot.sm{max-height:22vh}
+@media (max-height:790px){.shot.sm{max-height:19vh}}
+@media (max-height:640px){.shot.sm{max-height:16vh}}
+.shotcap{font-size:12.5px;color:var(--muted);margin:0 0 12px}
+.slide.dark .shotcap{color:#8FA3BE}
+@media (max-height:790px){.shot{max-height:27vh;margin:11px 0 5px}}
+@media (max-height:640px){.shot{max-height:23vh;margin:9px 0 4px}}
+/* iOS: dynamic viewport height + safe-area insets (Codex mobile review) */
+@supports (height:100dvh){ html,body,#deck{height:100dvh} }
+#topbar{height:calc(52px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top)}
+#nav{padding-bottom:env(safe-area-inset-bottom);height:calc(64px + env(safe-area-inset-bottom))}
+.slide{padding-left:max(34px,env(safe-area-inset-left));padding-right:max(34px,env(safe-area-inset-right))}
+/* 44px touch targets */
+.navbtn,#counter,.cmdbox .cp,#topbar .brandline{min-height:44px}
+#counter{display:inline-flex;align-items:center;justify-content:center;min-width:44px}
+.navbtn{display:inline-flex;align-items:center;justify-content:center}
+a,button{-webkit-tap-highlight-color:rgba(201,162,39,.22)}
+.linknote{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.45;
+  color:#7A5210;background:var(--warn-bg);border:1px solid #F0DDBA;
+  border-radius:9px;padding:9px 12px;margin:11px 0 0}
+.linknote b{color:#8A5A12}
+.slide.dark .linknote{background:rgba(232,199,79,.10);border-color:rgba(232,199,79,.32);color:#E8C74F}
+.slide.dark .linknote b{color:#fff}
+@media(max-width:760px){.linknote{font-size:13px}}
+/* "more below" cue, shown only when the slide really overflows */
+.scrollcue{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(72px + env(safe-area-inset-bottom));
+  z-index:56;display:none;align-items:center;gap:6px;pointer-events:none;
+  font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--slate);background:rgba(255,255,255,.94);border:1px solid var(--line);
+  padding:6px 12px;border-radius:20px;box-shadow:0 3px 12px rgba(11,31,58,.13);
+  animation:cuebob 1.7s ease-in-out infinite}
+.scrollcue.on{display:inline-flex}
+body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,255,255,.2);color:#C7D3E4}
+@keyframes cuebob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(3px)}}
+/* ---------- Nav ---------- */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;height:64px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 20px;background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(180%) blur(12px);border-top:1px solid var(--line);z-index:55;
+}
+#nav.dark{background:rgba(11,31,58,.82);border-color:rgba(255,255,255,.13)}
+.navbtn{
+  display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13.5px;font-weight:650;
+  color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 15px;cursor:pointer;transition:.16s;
+}
+.navbtn:hover{border-color:var(--navy-3);color:var(--navy-3)}
+.navbtn:disabled{opacity:.35;cursor:default}
+.navbtn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.navbtn.primary:hover{background:var(--navy-3);color:#fff}
+#nav.dark .navbtn{background:rgba(255,255,255,.11);color:#fff;border-color:rgba(255,255,255,.2)}
+#nav.dark .navbtn.primary{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+#counter{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.05em;cursor:pointer;padding:8px 12px;border-radius:8px}
+#counter:hover{background:rgba(0,0,0,.05);color:var(--navy)}
+#nav.dark #counter{color:#9FB2CC} #nav.dark #counter:hover{background:rgba(255,255,255,.1);color:#fff}
+.navmid{display:flex;align-items:center;gap:10px}
+.hint{font-size:11.5px;color:var(--muted)}
+@media(max-width:680px){.hint{display:none}}
+/* ---------- Overview ---------- */
+#overview{
+  position:fixed;inset:0;background:rgba(246,248,251,.98);z-index:70;display:none;overflow-y:auto;padding:26px 22px 40px;
+}
+#overview.on{display:block}
+#ovhead{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto 20px}
+#ovhead h4{margin:0;font-size:15px;color:var(--navy);font-weight:800;letter-spacing:-.01em}
+#ovgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px;max-width:1180px;margin:0 auto}
+.ovcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;cursor:pointer;transition:.15s}
+.ovcard:hover{border-color:var(--gold);box-shadow:0 3px 14px rgba(201,162,39,.16);transform:translateY(-1px)}
+.ovcard.cur{border-color:var(--navy);background:var(--navy);color:#fff}
+.ovcard .n{font-size:10.5px;font-weight:800;color:var(--gold-text);letter-spacing:.1em;margin-bottom:5px}
+.ovcard.cur .n{color:var(--gold-soft)}
+.ovcard .t{font-size:13px;font-weight:650;color:var(--ink);line-height:1.35}
+.ovcard.cur .t{color:#fff}
+.ovsec{grid-column:1/-1;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--muted);margin:14px 0 2px}
+.ovsec:first-child{margin-top:0}
+@media (max-height:790px){
+  .slide{padding:60px 34px 76px}
+  h1{font-size:clamp(28px,4.4vw,44px);margin-bottom:16px}
+  h2{font-size:clamp(23px,3.3vw,32px);margin-bottom:14px}
+  h3{font-size:17.5px;margin:20px 0 8px}
+  .lede{font-size:clamp(15px,1.7vw,17.5px);margin-bottom:13px}
+  p{font-size:15.5px;margin-bottom:11px;line-height:1.55}
+  ul.clean{margin-bottom:12px}
+  ul.clean li{font-size:15.5px;margin-bottom:9px}
+  .card ul.clean li{font-size:14px;margin-bottom:7px}
+  table{font-size:14px;margin-bottom:11px}
+  td{padding:8px 10px 8px 0}
+  th{padding-bottom:7px}
+  .callout{padding:13px 17px;margin:14px 0}
+  .callout p{font-size:14.5px}
+  .term{margin:13px 0}
+  .term-body{font-size:12.5px;padding:14px 15px 15px;line-height:1.65}
+  .cmdbox{padding:12px 52px 12px 15px;margin:11px 0}
+  .cmdbox pre{font-size:13px}
+  .statement{font-size:clamp(21px,3vw,30px);margin-bottom:14px}
+  .card{padding:17px 18px 15px}
+  .split,.grid2{gap:13px;margin:12px 0}
+  .half{padding:15px}
+  .appwin{margin:13px 0}
+  .appbody{padding:16px}
+  .stepnum{width:33px;height:33px;font-size:15px;margin-bottom:12px}
+  .pillrow{margin:13px 0 0}
+  #nav{height:56px}
+}
+@media (max-height:640px){
+  .slide{padding:54px 30px 68px}
+  h1{font-size:clamp(25px,3.8vw,36px);margin-bottom:13px}
+  h2{font-size:clamp(21px,2.9vw,27px);margin-bottom:11px}
+  h3{font-size:16px;margin:15px 0 6px}
+  .eyebrow{margin-bottom:11px}
+  .lede{font-size:15px;margin-bottom:11px;line-height:1.5}
+  p{font-size:14.5px;margin-bottom:9px;line-height:1.5}
+  ul.clean li{font-size:14.5px;margin-bottom:7px}
+  table{font-size:13px;margin-bottom:9px}
+  td{padding:6px 9px 6px 0}
+  .callout{padding:11px 15px;margin:11px 0}
+  .callout p{font-size:13.5px}
+  .callout .t{font-size:13.5px}
+  .term{margin:10px 0}
+  .term-body{font-size:11.5px;padding:12px 13px 13px;line-height:1.55}
+  .cmdbox{padding:10px 50px 10px 13px;margin:9px 0}
+  .cmdbox pre{font-size:12.5px}
+  .statement{font-size:clamp(19px,2.6vw,25px);margin-bottom:11px}
+  .card{padding:14px 15px 13px}
+  .half{padding:13px}
+  .appbody{padding:13px}
+  .approw{padding:7px 0;font-size:13px}
+  .stepnum{width:29px;height:29px;font-size:14px;margin-bottom:9px}
+  #nav{height:52px}
+}
+@media(max-width:760px){
+  /* inline grid styles on some slides need overriding */
+  .grid2,.split{grid-template-columns:1fr !important;gap:12px}
+  .slide{padding:58px 17px 78px}
+  .inner,.slide.wide .inner{max-width:100%}
+  h1{font-size:clamp(26px,7.4vw,34px);line-height:1.13}
+  h2{font-size:clamp(21px,5.8vw,27px)}
+  h3{font-size:17px}
+  .statement{font-size:clamp(19px,5.2vw,24px);line-height:1.3}
+  .lede{font-size:16px;line-height:1.55}
+  p,ul.clean li{font-size:15.5px}
+  /* nothing on a phone should be under ~12.5px */
+  .small,.sub,.shotcap,.hint{font-size:13px}
+  .eyebrow{letter-spacing:.13em}
+  .card .tag{font-size:11.5px}
+  th{font-size:11.5px}
+  td{font-size:14.5px;padding:9px 8px 9px 0}
+  td:first-child{white-space:normal}
+  .callout p{font-size:14.5px} .callout .t{font-size:14px}
+  .cmdbox pre{font-size:12.5px} .cmdbox{padding:12px 14px 12px 13px}
+  .cmdbox .cp{position:static;display:inline-block;margin-top:9px}
+  /* screenshots: full width beats tall-and-tiny on a phone */
+  .shot,.shot.lg,.shot.sm{max-height:none;width:100%;margin:13px 0 6px}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .kbd{font-size:12.5px}
+  /* flex + overflow is the usual cause of stuck scrolling on iOS — use a plain block */
+  .slide.on{display:block}
+  .inner{margin:0 auto}
+  #ovgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  #ovhead{position:sticky;top:0;background:var(--bg-alt);padding:8px 0 10px;z-index:3;margin-bottom:12px}
+  #ovhead h4{font-size:14px}
+  .ovcard{padding:11px 12px}
+  code{font-size:.94em}
+  .term-body{font-size:12.2px}
+  .eyebrow{font-size:12px}
+  .ovcard .n{font-size:11.5px} .ovcard .t{font-size:13.5px} .ovsec{font-size:11.5px}
+
+  #nav{height:calc(58px + env(safe-area-inset-bottom));padding:0 12px}
+  .slide{padding-top:calc(58px + env(safe-area-inset-top));
+         padding-bottom:calc(78px + env(safe-area-inset-bottom));
+         padding-left:max(17px,env(safe-area-inset-left));
+         padding-right:max(17px,env(safe-area-inset-right))}
+  .cmdbox .cp,.half .hd,#counter,th,.ovcard .n,.ovsec{font-size:13px}
+  .card .tag{font-size:12.5px}
+  .appchip{font-size:12.5px}
+  .term-title{font-size:12.5px}
+  .cmdbox .cp{padding:10px 14px}
+  .navbtn{font-size:12.5px;padding:8px 11px}
+  #counter{font-size:11.5px;padding:6px 8px}
+}
+@media(max-width:430px){
+  #sectionlabel{display:none}
+  #topbar .brandline{font-size:12px;letter-spacing:.09em}
+  #topbar .brandline .home{font-size:14px}
+}
+@media print{body{overflow:visible}.slide{display:block!important;position:static;page-break-after:always;min-height:auto;padding:30px}#nav,#topbar,#progress,#overview{display:none!important}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="topbar">
+  <button class="brandline" id="tohome" title="Back to the first slide"><span class="home">⌂</span><svg class="gslogo" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 22 L40 10 L20 40 L18 26 Z" fill="#12B886"/></svg>Glide&nbsp;Slope&nbsp;AI &nbsp;·&nbsp; Claude Code Setup</button>
+  <div id="sectionlabel"></div>
+</div>
+<div id="deck">
+
+<!-- ============ WELCOME ============ -->
+<section class="slide dark" data-sec="Welcome" data-title="Title">
+  <div class="inner">
+    <p class="eyebrow">Glide Slope AI · August 2026</p>
+    <h1>Installing<br>Claude&nbsp;Code</h1>
+    <p class="lede">Everything you need to go from nothing installed to your first working session. One idea per slide. No prior terminal experience assumed.</p>
+    <div class="pillrow">
+      <span class="pill">~10 minutes</span>
+      <span class="pill">Mac &amp; Windows</span>
+      <span class="pill">Two setup paths</span>
+      <span class="pill">Sourced from Anthropic's official docs</span>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Welcome" data-title="How to use this deck">
+  <div class="inner">
+    <p class="eyebrow">Before we start</p>
+    <h2>How to move through this</h2>
+    <ul class="clean">
+      <li>Press <span class="kbd">→</span> or <span class="kbd">Space</span> for the next slide, <span class="kbd">←</span> to go back.</li>
+      <li>On a phone or tablet, just swipe.</li>
+      <li>Click the slide counter at the bottom (or press <span class="kbd">O</span>) to see every slide at once and jump anywhere.</li>
+      <li>Lost? Click <strong>⌂ Start</strong> at the bottom left, or the title in the top corner, to come back to the beginning. <span class="kbd">Home</span> does the same.</li>
+      <li>Every command has a <strong>Copy</strong> button. Use it — do not retype commands by hand.</li>
+      <li><strong>Reading this a while after August 2026?</strong> Every link and screenshot was checked on 27 Aug 2026. Anthropic moves fast — if a page looks different from a screenshot here, the live page is right.</li>
+    </ul>
+    <div class="callout">
+      <p class="t">You will not break anything</p>
+      <p>Claude Code asks permission before it touches a single file. Nothing on this walkthrough is destructive, and every step is reversible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Welcome" data-title="Where you'll end up">
+  <div class="inner">
+    <p class="eyebrow">The destination</p>
+    <h2>What you'll have at the end</h2>
+    <ul class="clean check">
+      <li>Claude Code installed and confirmed working on your machine</li>
+      <li>Your account logged in — a one-time step</li>
+      <li>One real task completed, start to finish</li>
+      <li>The two commands that diagnose almost any problem you'll hit later</li>
+    </ul>
+    <p class="small">We'll walk this together on a screen share too. This deck is so you can move at your own pace before and after that call.</p>
+  </div>
+</section>
+
+<!-- ============ WHAT IT IS ============ -->
+<section class="slide dark" data-sec="What it is" data-title="Section: What it is">
+  <div class="inner">
+    <p class="eyebrow">Part One</p>
+    <h1>What Claude Code<br>actually is</h1>
+    <p class="lede">Two minutes of orientation, so the install steps make sense when we get to them.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="What it is" data-title="Not a chat window">
+  <div class="inner">
+    <p class="eyebrow">The core idea</p>
+    <p class="statement">It is not a chat window that hands you text to copy and paste.</p>
+    <p class="lede">Claude Code reads the files on your computer, edits them, runs commands, and works across a whole folder. You describe an outcome in plain English, and it does the work on your actual machine — then shows you exactly what it changed.</p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="What it is" data-title="The one-sentence version">
+  <div class="inner">
+    <p class="eyebrow">If you remember one thing</p>
+    <p class="statement">A very capable assistant that has been given a keyboard and access to your folders — and asks permission before it touches anything.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="What it is" data-title="It isn't only for coding">
+  <div class="inner">
+    <p class="eyebrow">A common misconception</p>
+    <h2>You do not need to know how to code</h2>
+    <p class="lede">A great deal of what it is good at has nothing to do with software:</p>
+    <ul class="clean">
+      <li>Reading, organizing, and renaming files on your computer</li>
+      <li>Pulling data out of spreadsheets and documents and reshaping it</li>
+      <li>Building small internal tools, dashboards, and web pages</li>
+      <li>Automating anything repetitive you currently do by hand</li>
+      <li>Writing, testing, and fixing code — if that happens to be your world</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ BEFORE YOU START ============ -->
+<section class="slide dark" data-sec="Before you start" data-title="Section: Before you start">
+  <div class="inner">
+    <p class="eyebrow">Part Two</p>
+    <h1>Before you<br>start</h1>
+    <p class="lede">Two things to check. The first one is the single most common reason a setup stalls halfway through.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Before you start" data-title="You need a paid plan">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>You need a paid Claude plan</h2>
+    <p class="lede">Claude Code needs <strong>Pro, Max, Team, or Enterprise</strong> — or Console credits.</p>
+    <div class="callout err">
+      <p class="t">The free Claude.ai plan does not include Claude Code</p>
+      <p>If you are on the free plan, the install will appear to work and then refuse to run. Sort this out before you go any further.</p>
+    </div>
+    <img class="shot sm" src="assets/09-pricing.png" alt="claude.com pricing page" width="2560" height="1720" decoding="async">
+    <p class="shotcap">The live pricing page.</p>
+    <p>Plans: <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a> &nbsp;·&nbsp; Console: <a href="https://platform.claude.com" target="_blank" rel="noopener">platform.claude.com</a></p>
+    <p class="linknote"><span>⚠</span><span><b>Verified 27 Aug 2026.</b> Anthropic changes these pages often — if the live page looks different from this screenshot, trust the live page.</span></p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Before you start" data-title="System requirements">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>Check your machine meets the minimum</h2>
+    <table>
+      <tr><td>macOS</td><td>13.0 (Ventura) or newer</td></tr>
+      <tr><td>Windows</td><td>10 version 1809+, or Server 2019+</td></tr>
+      <tr><td>Linux</td><td>Ubuntu 20.04+, Debian 10+, Alpine 3.19+</td></tr>
+      <tr><td>Memory</td><td>4 GB RAM minimum</td></tr>
+      <tr><td>Processor</td><td>x64 or ARM64</td></tr>
+      <tr><td>Network</td><td>Internet connection required</td></tr>
+    </table>
+    <div class="callout">
+      <p class="t">Check your macOS version now, not later</p>
+      <p>Apple menu → About This Mac. If it is older than macOS 13.0, run Software Update first. Otherwise the install appears to succeed and then fails with a confusing <code>dyld</code> error.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Before you start" data-title="What you do NOT need">
+  <div class="inner">
+    <p class="eyebrow">Ignore the internet on this one</p>
+    <h2>What you do <em>not</em> need</h2>
+    <p class="lede">Most tutorials online get this wrong and send people on a 40-minute detour. Straight from Anthropic's own documentation:</p>
+    <ul class="clean cross">
+      <li><strong>Node.js</strong> — not required. The installer ships a standalone program (a compiled binary, not JavaScript).</li>
+      <li><strong>Python</strong> — not required.</li>
+      <li><strong>Git</strong> — optional for the <em>Terminal</em> install, even on Windows, where it just gives Claude a better shell. It <em>is</em> required for local sessions in the Windows Desktop app.</li>
+      <li><strong>Administrator access</strong> — the docs say plainly you do not need to run as Administrator.</li>
+    </ul>
+    <div class="callout ok">
+      <p class="t">Why nearly everyone believes you need Node</p>
+      <p>Because you used to. Claude Code originally shipped <em>only</em> as <code>npm install -g @anthropic-ai/claude-code</code>, which needs Node 22+. That was the main route for most of its life, so almost every tutorial still teaches it. The native installer replaced it. If a video tells you to install Node, Python and Git and run PowerShell as Administrator, it is teaching the old way — you can skip all of it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide dark wide" data-sec="Before you start" data-title="The 3 mistakes that stop most first-timers">
+  <div class="inner">
+    <p class="eyebrow">If you read one slide, read this one</p>
+    <h2>The three mistakes that stop most first-timers</h2>
+    <p class="lede">Nearly every failed setup is one of these. None means Claude Code is broken.</p>
+    <div class="grid2" style="grid-template-columns:repeat(3,1fr);gap:14px">
+      <div class="card">
+        <p class="tag">Mistake 1</p>
+        <h3>The free plan</h3>
+        <p><strong>Tell:</strong> install works, then it asks you to upgrade.</p>
+        <p><strong>Fix:</strong> needs Pro, Max, Team, Enterprise, or Console credits. Sort the plan first — the top reason setups stall.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Mistake 2</p>
+        <h3>Quitting at <code>command not found</code></h3>
+        <p><strong>Tell:</strong> "successfully installed," then <code>claude</code> isn't recognised.</p>
+        <p><strong>Fix:</strong> nothing failed — the folder isn't on your PATH. One line fixes it, and the installer prints that line for you.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Mistake 3</p>
+        <h3>Following an outdated guide</h3>
+        <p><strong>Tell:</strong> 40 minutes installing Node, Python and Git before anything else.</p>
+        <p><strong>Fix:</strong> skip it. One command installs Claude Code. Never <code>sudo npm install -g</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Before you start" data-title="Corporate network note">
+  <div class="inner">
+    <p class="eyebrow">One edge case</p>
+    <h2>If you're on a locked-down work network</h2>
+    <p class="lede">The installer downloads from <code>downloads.claude.ai</code>. If your company runs a proxy or a strict firewall, flag it to IT before you begin — it is much faster than debugging a mystery failure afterwards.</p>
+    <p>Claude Code is also only available in Anthropic-supported countries.</p>
+  </div>
+</section>
+
+<!-- ============ PICK YOUR PATH ============ -->
+<section class="slide dark" data-sec="Pick your path" data-title="Section: Pick your path">
+  <div class="inner">
+    <p class="eyebrow">Part Three</p>
+    <h1>Pick your<br>path</h1>
+    <p class="lede">There are two ways in. Almost every tutorial online picks one and never tells you the choice exists.</p>
+  </div>
+</section>
+
+<section class="slide plain wide" data-sec="Pick your path" data-title="The two paths">
+  <div class="inner">
+    <h2>Two doors, same engine</h2>
+    <p class="lede">Both run the same engine, the same model, and the same settings. What differs is the interface — and whether you can script it. Pick one now; adding the other later takes about ninety seconds.</p>
+    <div class="grid2">
+      <div class="card hi">
+        <p class="tag">Start here if you're non-technical</p>
+        <h3>A — The Desktop App</h3>
+        <p>A normal application with buttons, panels, and a visual review screen. No terminal at any point.</p>
+        <ul class="clean">
+          <li>Download, double-click, sign in, done</li>
+          <li>See changes in a side-by-side visual diff</li>
+          <li>Point-and-click folder selection</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="tag">Start here if you live in a terminal</p>
+        <h3>B — The Terminal</h3>
+        <p>The full command-line version. More power, scriptable, and what most technical documentation assumes.</p>
+        <ul class="clean">
+          <li>One install command, then type <code>claude</code></li>
+          <li>Scriptable and automatable</li>
+          <li>Auto-updates in the background</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Pick your path" data-title="Not sure? Take the app">
+  <div class="inner">
+    <p class="eyebrow">If you're on the fence</p>
+    <p class="statement">Take the Desktop App.</p>
+    <p class="lede">It is the shorter road to a working setup, and nothing you do now locks you out of anything. Adding the terminal version later takes about ninety seconds.</p>
+    <div class="callout">
+      <p class="t">Where to go next in this deck</p>
+      <p>Desktop App → the next five slides.<br>Terminal → skip ahead to <strong>Part Four&nbsp;B</strong> using the slide overview (press <span class="kbd">O</span>).</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide dark wide" data-sec="Pick your path" data-title="Do I need both? Is terminal more powerful?">
+  <div class="inner">
+    <p class="eyebrow">The three questions everyone asks here</p>
+    <h2>Do I need both? Is one more powerful?</h2>
+    <div class="grid2" style="grid-template-columns:repeat(3,1fr);gap:14px">
+      <div class="card">
+        <p class="tag">Question 1</p>
+        <h3>Do I need both?</h3>
+        <p><strong>No.</strong> Pick one and stop. The Desktop app has Claude Code built in — installing it does not require the terminal version, and you can ignore the whole terminal section.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Question 2</p>
+        <h3>Is the terminal more powerful?</h3>
+        <p><strong>For the actual work, no</strong> — same engine, same model, same abilities. It <em>is</em> more powerful for <em>automation</em>: you can pipe things into it and run it on a schedule.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Question 3</p>
+        <h3>So how do I choose?</h3>
+        <p>By how you like to work, not by capability. Buttons and a visual diff → Desktop. Already live in a terminal, or you want to script it → Terminal.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p class="t">The one thing that is genuinely different</p>
+      <p>The Desktop app does <strong>not</strong> install the <code>claude</code> terminal command. So <code>claude --version</code> and <code>claude doctor</code> — and anything you pipe — only exist if you also do the Terminal install. Adding it later takes about ninety seconds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PATH A — DESKTOP ============ -->
+<section class="slide dark" data-sec="Path A · Desktop" data-title="Section: Path A — Desktop">
+  <div class="inner">
+    <p class="eyebrow">Part Four A</p>
+    <h1>Install the<br>Desktop app</h1>
+    <p class="lede">Five steps, no terminal. If you chose the Terminal path, jump ahead to Part Four&nbsp;B.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path A · Desktop" data-title="A1 — Download">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Download the installer</h2>
+    <p class="lede">Go to <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a> and pick the build for your machine.</p>
+    <table>
+      <tr><td>macOS</td><td>One universal build — works on both Intel and Apple Silicon</td></tr>
+      <tr><td>Windows (x64)</td><td>The right choice for almost every PC</td></tr>
+      <tr><td>Windows ARM64</td><td>Only for Surface Pro X and similar ARM machines</td></tr>
+    </table>
+    <img class="shot sm" src="assets/17-download.png" alt="claude.com/download" width="2560" height="1720" decoding="async">
+    <p class="shotcap">The live download page — pick the build that matches your machine.</p>
+    <p class="small">Claude Code is built into this app. There is nothing else to install.</p>
+    <p class="linknote"><span>⚠</span><span><b>Verified 27 Aug 2026.</b> Anthropic changes these pages often — if the live page looks different from this screenshot, trust the live page.</span></p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Path A · Desktop" data-title="A2 — Run and sign in">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>Run it and sign in</h2>
+    <p class="lede">Launch <strong>Claude</strong> from your Applications folder on macOS, or the Start menu on Windows. Sign in with your Anthropic account.</p>
+    <div class="callout">
+      <p class="t">This is the paid-plan checkpoint</p>
+      <p>Sign in with the account that holds your Pro, Max, Team, or Enterprise subscription. If you sign in with a different email that's on the free plan, the next step will ask you to upgrade.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path A · Desktop" data-title="A3 — The Code tab">
+  <div class="inner">
+    <span class="stepnum">3</span>
+    <h2>Click the "Code" tab</h2>
+    <p class="lede">It sits at the top centre of the window, alongside Chat and Cowork.</p>
+    <div class="appwin">
+      <div class="appbar">
+        <span class="dot r" style="width:11px;height:11px;border-radius:50%;background:#FF5F57"></span>
+        <span class="dot y" style="width:11px;height:11px;border-radius:50%;background:#FEBC2E"></span>
+        <span class="dot g" style="width:11px;height:11px;border-radius:50%;background:#28C840"></span>
+        <div class="apptabs">
+          <span class="apptab">Chat</span>
+          <span class="apptab">Cowork</span>
+          <span class="apptab sel">Code</span>
+        </div>
+      </div>
+      <div class="appbody">
+        <div class="approw"><span class="appchip">Local</span> Work on files on this computer</div>
+        <div class="approw"><span class="appchip" style="background:#EEF2F7;color:#4A6285">Cloud</span> Run on Anthropic's machines instead</div>
+      </div>
+    </div>
+    <p class="small">Illustration of the layout — your window will show your own account and projects.</p>
+    <div class="callout err">
+      <p class="t">If clicking Code asks you to upgrade</p>
+      <p>Your account is still on a free plan. Subscribe and come back. If it asks you to sign in online instead, complete that and restart the app.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Path A · Desktop" data-title="A4 — Choose Local, pick a folder">
+  <div class="inner">
+    <span class="stepnum">4</span>
+    <h2>Choose "Local" and pick a folder</h2>
+    <p class="lede"><strong>Local</strong> means Claude works on your machine, on your real files. Click <strong>Select folder</strong> and choose a directory.</p>
+    <div class="callout ok">
+      <p class="t">Start with a small folder you know well</p>
+      <p>It is the fastest way to see what this thing actually does — and the easiest way to sanity-check its work, because you already know what's in there.</p>
+    </div>
+    <div class="callout">
+      <p class="t">Windows only</p>
+      <p>Local sessions need <strong>Git for Windows</strong> installed. Download it from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a> and click Next through every screen — the defaults are correct. Most Macs already include Git, so Mac users skip this.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path A · Desktop" data-title="Folder scope — what you're granting">
+  <div class="inner">
+    <p class="eyebrow">Worth understanding before you click</p>
+    <h2>What picking a folder actually grants</h2>
+    <p class="statement">Claude sees that folder <em>and everything inside it</em>.</p>
+    <p class="lede">Subfolders included, all the way down. That is exactly what makes it useful — and exactly why you should point it at a project folder rather than your entire home directory on day one.</p>
+    <ul class="clean check">
+      <li>Good first pick: a single project folder, or a folder of documents you're working on</li>
+      <li>Hold off on: your whole user folder, anything with client PHI or financial records, shared network drives</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Path A · Desktop" data-title="A5 — First instruction">
+  <div class="inner">
+    <span class="stepnum">5</span>
+    <h2>Type your first instruction</h2>
+    <p class="lede">Anything plain-English will do. Claude proposes changes and — depending on your permission mode — either applies them or waits for your approval.</p>
+    <div class="cmdbox"><pre>what's in this folder, and what does this project do?</pre><button class="cp">Copy</button></div>
+    <p>That's it. You are running.</p>
+  </div>
+</section>
+
+<section class="slide plain wide" data-sec="Path A · Desktop" data-title="Permission modes">
+  <div class="inner">
+    <p class="eyebrow">The setting that matters most</p>
+    <h2>Understanding permission modes</h2>
+    <p class="lede">This governs how much Claude does before checking with you. It is in the selector next to the send button, and you can change it at any moment.</p>
+    <table>
+      <tr><th>Mode</th><th>What happens</th><th>Use when</th></tr>
+      <tr><td>Manual</td><td>Claude proposes each change and waits. Your files are untouched until you accept.</td><td>You're new, or the work is delicate</td></tr>
+      <tr><td>Auto</td><td>A classifier reviews actions in the background and blocks risky ones instead of asking you.</td><td>Day-to-day work, once you trust it</td></tr>
+      <tr><td>Accept edits</td><td>File edits are auto-accepted for faster iteration.</td><td>Rapid back-and-forth on one file</td></tr>
+      <tr><td>Plan</td><td>Claude proposes an approach and edits nothing at all.</td><td>Before any large or risky change</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide dark" data-sec="Path A · Desktop" data-title="Start in Manual">
+  <div class="inner">
+    <p class="eyebrow">Our recommendation</p>
+    <p class="statement">Start in Manual for your first few sessions.</p>
+    <p class="lede">Watching it ask permission — and seeing exactly what it wanted to do before it did it — is how you build an accurate sense of what this thing is capable of. Switch to Auto once that instinct is there.</p>
+    <p class="small">Desktop path complete — you are running. Verify the Desktop way: open the <strong>Code</strong> tab, pick a folder, start a session. <strong>Part Five uses <code>claude --version</code> and <code>claude doctor</code>, which are Terminal-only</strong> — the Desktop app does not install the terminal command. Carry on to Part Four&nbsp;B only if you also want the CLI.</p>
+  </div>
+</section>
+
+<!-- ============ PATH B — TERMINAL ============ -->
+<section class="slide dark" data-sec="Path B · Terminal" data-title="Section: Path B — Terminal">
+  <div class="inner">
+    <p class="eyebrow">Part Four B</p>
+    <h1>Install the<br>Terminal version</h1>
+    <p class="lede">One command. The next few slides show it on Mac, then on Windows.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path B · Terminal" data-title="Mac — open Terminal">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Open Terminal <span class="small" style="font-weight:500">(macOS)</span></h2>
+    <p class="lede">Press <span class="kbd">Cmd</span> + <span class="kbd">Space</span> to open Spotlight, type <strong>Terminal</strong>, press Enter.</p>
+    <div class="term">
+      <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">Terminal — zsh — 80×24</span></div>
+      <pre class="term-body"><span class="pr">yourname@MacBook ~ %</span> <span class="cur"></span></pre>
+    </div>
+    <p>A window with a blinking cursor appears. That's it — that's the terminal. Nothing is running yet.</p>
+    <p class="small">On Linux: press <span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">T</span>, or search "Terminal" in your application menu.</p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Path B · Terminal" data-title="Mac — the install command">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>Paste the install command</h2>
+    <p class="lede">Copy this, paste it into the terminal with <span class="kbd">Cmd</span> + <span class="kbd">V</span>, and press Enter.</p>
+    <div class="cmdbox"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button class="cp">Copy</button></div>
+    <p class="small">On Linux, paste with <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">V</span>. This same command works on macOS, Ubuntu/Debian, and WSL&nbsp;2. Alpine needs extra packages first, and WSL&nbsp;1 may need Anthropic's documented workaround.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path B · Terminal" data-title="What success looks like">
+  <div class="inner">
+    <p class="eyebrow">Step 2 continued</p>
+    <h2>What success looks like</h2>
+    <p class="lede">Text scrolls past as it works. After a few seconds you'll see this:</p>
+    <img class="shot lg" src="assets/28-install.png" alt="Real installer output" width="2152" height="934" decoding="async">
+    <p class="shotcap">Real output from the official installer. Note it also warns you about PATH — that is the next section.</p>
+    <div class="callout ok">
+      <p class="t">Native installs keep themselves current</p>
+      <p>This version updates itself in the background. You will not need to reinstall to get new features.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide dark" data-sec="Path B · Terminal" data-title="Windows — PowerShell vs CMD">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Windows: know which shell you're in</h2>
+    <p class="lede">Windows has two command windows that look nearly identical and take <strong>different commands</strong>. Nearly every Windows install failure starts here.</p>
+    <div class="split">
+      <div class="half good">
+        <p class="hd">PowerShell — use this one</p>
+        <p>The prompt starts with <strong>PS</strong>:</p>
+        <p><code>PS C:\Users\YourName&gt;</code></p>
+      </div>
+      <div class="half bad">
+        <p class="hd">CMD — different command</p>
+        <p>No <strong>PS</strong> at the front:</p>
+        <p><code>C:\Users\YourName&gt;</code></p>
+      </div>
+    </div>
+    <p>Open PowerShell with <span class="kbd">Win</span> + <span class="kbd">X</span> → <strong>Windows PowerShell</strong> (or Terminal).</p>
+    <div class="callout">
+      <p class="t">Do not open the one marked (x86)</p>
+      <p>On a 64-bit machine that entry runs a 32-bit process and the install will refuse with "Claude Code does not support 32-bit Windows."</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path B · Terminal" data-title="Windows — the install command">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>Windows: paste the install command</h2>
+    <p class="lede">In <strong>PowerShell</strong>:</p>
+    <div class="cmdbox"><pre>irm https://claude.ai/install.ps1 | iex</pre><button class="cp">Copy</button></div>
+    <div class="term ps">
+      <div class="term-bar"><span class="term-title">Windows PowerShell</span></div>
+      <pre class="term-body"><span class="pr2">PS C:\Users\YourName&gt;</span> <span class="cm">irm https://claude.ai/install.ps1 | iex</span>
+<span class="ou">Downloading Claude Code...</span>
+<span class="ok">Claude Code successfully installed!</span>
+<span class="pr2">PS C:\Users\YourName&gt;</span> <span class="cur"></span></pre>
+    </div>
+    <p class="small">If you are in <strong>CMD</strong> instead, use this one:</p>
+    <div class="cmdbox"><pre>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</pre><button class="cp">Copy</button></div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Path B · Terminal" data-title="Windows — the two mirror errors">
+  <div class="inner">
+    <p class="eyebrow">If it errors immediately</p>
+    <h2>Two errors that mean "wrong shell"</h2>
+    <p class="lede">These two are mirror images of each other. Neither means the install failed — you just ran the wrong version of the command.</p>
+    <div class="split">
+      <div class="half bad">
+        <p class="hd">'irm' is not recognized</p>
+        <p>You are in <strong>CMD</strong> but ran the PowerShell command.</p>
+        <p><strong>Fix:</strong> switch to PowerShell (<span class="kbd">Win</span>+<span class="kbd">X</span>), or use the CMD command instead.</p>
+      </div>
+      <div class="half bad">
+        <p class="hd">The token '&amp;&amp;' is not a valid statement separator</p>
+        <p>You are in <strong>PowerShell</strong> but ran the CMD command.</p>
+        <p><strong>Fix:</strong> use <code>irm https://claude.ai/install.ps1 | iex</code></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path B · Terminal" data-title="Windows — Git is optional">
+  <div class="inner">
+    <p class="eyebrow">Recommended, not required</p>
+    <h2>Git for Windows</h2>
+    <p class="lede">Git for Windows gives Claude Code a proper shell. Without it, it falls back to PowerShell — which works, just less well.</p>
+    <ul class="clean">
+      <li>Download from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a></li>
+      <li>Click Next through every screen — every default is correct</li>
+      <li>You will never have to learn Git yourself</li>
+    </ul>
+    <img class="shot sm" src="assets/32-gitwin.png" alt="git-scm.com/downloads/win" width="2560" height="1720" decoding="async">
+    <p class="shotcap">The live download page.</p>
+    <p class="small">Already have it? Skip. Not sure? Install it anyway — reinstalling causes no harm.</p>
+    <p class="linknote"><span>⚠</span><span><b>Verified 27 Aug 2026.</b> Anthropic changes these pages often — if the live page looks different from this screenshot, trust the live page.</span></p>
+  </div>
+</section>
+
+<section class="slide tint wide" data-sec="Path B · Terminal" data-title="Other install methods">
+  <div class="inner">
+    <p class="eyebrow">Only if your team already standardises on one</p>
+    <h2>Other install methods</h2>
+    <p class="lede">The command on the previous slides is the recommended route. These alternatives exist for teams with existing package-management standards.</p>
+    <table>
+      <tr><th>Method</th><th>Command</th><th>Auto-updates?</th></tr>
+      <tr><td>Homebrew<br><span class="small">macOS</span></td><td><code>brew install --cask claude-code</code></td><td><strong style="color:var(--err)">No</strong></td></tr>
+      <tr><td>WinGet<br><span class="small">Windows</span></td><td><code>winget install Anthropic.ClaudeCode</code></td><td><strong style="color:var(--err)">No</strong></td></tr>
+      <tr><td>npm<br><span class="small">any platform</span></td><td><code>npm install -g @anthropic-ai/claude-code</code></td><td>Manual upgrade</td></tr>
+    </table>
+    <div class="callout">
+      <p class="t">The auto-update trap nobody mentions</p>
+      <p>Homebrew and WinGet installs <strong>do not update themselves</strong>. If you go this route, run <code>brew upgrade claude-code</code> or <code>winget upgrade Anthropic.ClaudeCode</code> periodically, or you will quietly fall months behind.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Path B · Terminal" data-title="Never use sudo">
+  <div class="inner">
+    <p class="eyebrow">One hard rule</p>
+    <p class="statement">Never run <code style="font-size:.8em">sudo npm install -g</code></p>
+    <p class="lede">It creates permission problems that are genuinely painful to unwind, and it is a real security risk. Anthropic's documentation warns against it explicitly.</p>
+    <p>If you hit permission errors with npm, fix the npm prefix instead of reaching for <code>sudo</code>.</p>
+    <div class="callout ok">
+      <p class="t">For the record, on npm</p>
+      <p>You may see videos claiming the npm install is "deprecated." It is not. It is still documented and supported — it needs Node 22+ and installs the same program. The native installer is simply <em>recommended</em>, not the only supported route.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE #1 GOTCHA ============ -->
+<section class="slide dark" data-sec="The #1 gotcha" data-title="Section: The #1 gotcha">
+  <div class="inner">
+    <p class="eyebrow">Part Four C · The most important slides in this deck</p>
+    <h1>The moment<br>most people quit</h1>
+    <p class="lede">The installer prints "successfully installed." Then you type <code>claude</code> and the computer says it has never heard of it. Here is exactly what that means and how to fix it in one line.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="The #1 gotcha" data-title="What the failure looks like">
+  <div class="inner">
+    <p class="eyebrow">Recognise this</p>
+    <h2>What it looks like</h2>
+    <img class="shot lg" src="assets/36-notfound.png" alt="command not found: claude" width="1912" height="344" decoding="async">
+    <p class="shotcap">A real reproduction — the shell genuinely could not find claude.</p>
+    <p class="small">On Windows the wording differs slightly: <code>'claude' is not recognized as an internal or external command</code>.</p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="The #1 gotcha" data-title="It is not a failed install">
+  <div class="inner">
+    <p class="eyebrow">Do not reinstall</p>
+    <p class="statement">This does not mean the install failed.</p>
+    <p class="lede">Claude Code is on your machine. It sits at <code>~/.local/bin/claude</code> on macOS and Linux, or <code>%USERPROFILE%\.local\bin\claude.exe</code> on Windows. Your shell simply does not know to look in that folder yet.</p>
+    <p>That list of folders your computer searches when you type a command is called your <strong>PATH</strong>. We are about to add one folder to it. That is the entire fix.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="The #1 gotcha" data-title="The fix — macOS">
+  <div class="inner">
+    <span class="stepnum">✓</span>
+    <h2>The fix — macOS</h2>
+    <p class="lede">Paste both lines. The first adds the folder permanently; the second applies it to the window you're in right now.</p>
+    <div class="cmdbox"><pre>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc
+source ~/.zshrc</pre><button class="cp">Copy</button></div>
+    <p>Then type <code>claude</code> again. It will work.</p>
+    <p class="small">On Linux, the default shell is usually Bash — use <code>~/.bashrc</code> in place of <code>~/.zshrc</code> in both lines.</p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="The #1 gotcha" data-title="The fix — Windows">
+  <div class="inner">
+    <span class="stepnum">✓</span>
+    <h2>The fix — Windows</h2>
+    <p class="lede">Paste this into <strong>PowerShell</strong>:</p>
+    <div class="cmdbox"><pre>$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</pre><button class="cp">Copy</button></div>
+    <p>Or do it through the interface: <strong>System Environment Variables → Path → New</strong>, and add <code>%USERPROFILE%\.local\bin</code>.</p>
+  </div>
+</section>
+
+<section class="slide dark" data-sec="The #1 gotcha" data-title="Close and reopen">
+  <div class="inner">
+    <p class="eyebrow">The step people skip</p>
+    <p class="statement">On Windows, close your terminal completely and open a new one.</p>
+    <p class="lede">The Windows environment-variable change does not reach a window that is already open — and that one detail causes an enormous share of "I did the fix and it still doesn't work." <strong>On macOS you can skip this:</strong> the <code>source ~/.zshrc</code> line already applied the change to the window you are in.</p>
+    <div class="callout">
+      <p class="t">Still missing after a fresh window?</p>
+      <p>Check whether the file actually exists — <code>~/.local/bin/claude</code> on macOS/Linux, <code>%USERPROFILE%\.local\bin\claude.exe</code> on Windows. If it does not, the install genuinely did not finish — run the install command again.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VERIFY ============ -->
+<section class="slide dark" data-sec="Verify" data-title="Section: Verify">
+  <div class="inner">
+    <p class="eyebrow">Part Five</p>
+    <h1>Confirm it<br>actually worked</h1>
+    <p class="lede">Thirty seconds that saves you an hour later. Almost no tutorial includes this step.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Verify" data-title="claude --version">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Check the version</h2>
+    <div class="cmdbox"><pre>claude --version</pre><button class="cp">Copy</button></div>
+    <p class="lede">A working install prints a version number followed by <code>(Claude Code)</code>:</p>
+    <img class="shot lg" src="assets/42-version.png" alt="claude --version output" width="1912" height="344" decoding="async">
+    <p class="shotcap">Real output on a working install.</p>
+    <p class="small">Your number will differ — Claude Code ships updates constantly. Any version number confirms the program is installed and on your PATH. Run <code>claude doctor</code> next to check configuration and health.</p>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Verify" data-title="claude doctor">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>The deeper check</h2>
+    <p class="lede">A full read-only diagnostic — install health, config errors, suggested fixes. It starts no session and changes nothing.</p>
+    <div class="cmdbox"><pre>claude doctor</pre><button class="cp">Copy</button></div>
+    <img class="shot sm" src="assets/43-doctor.png" alt="claude doctor output" width="2112" height="1116" decoding="async">
+    <p class="shotcap">Real diagnostic output.</p>
+    <div class="callout ok">
+      <p class="t">Learn this one now, use it later</p>
+      <p>When something breaks in three weeks, this tells you <em>what</em> broke instead of leaving you guessing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOG IN ============ -->
+<section class="slide dark" data-sec="Log in" data-title="Section: Log in">
+  <div class="inner">
+    <p class="eyebrow">Part Six</p>
+    <h1>Log in</h1>
+    <p class="lede">A one-time step. Your credentials are stored afterwards.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Log in" data-title="Run claude, sign in">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Run it and sign in</h2>
+    <div class="cmdbox"><pre>claude</pre><button class="cp">Copy</button></div>
+    <p class="lede">On first use you pick a login method, then a browser opens. One-time step.</p>
+    <img class="shot sm" src="assets/45-login.png" alt="Select login method" width="2152" height="1434" decoding="async">
+    <p class="shotcap">The real first-run screen. Note the plans listed — no free tier.</p>
+    <ul class="clean">
+      <li><strong>Pro / Max / Team / Enterprise</strong> — the route for most people</li>
+      <li><strong>Claude Console</strong> — API access on pre-paid credits</li>
+      <li><strong>Bedrock / Google Cloud / MS Foundry</strong> — enterprise cloud</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Log in" data-title="If the browser never opens">
+  <div class="inner">
+    <p class="eyebrow">Common on locked-down machines</p>
+    <h2>If the browser never opens</h2>
+    <p class="lede">Common on remote machines and corporate setups. Not an error — you finish the same flow by hand:</p>
+    <img class="shot sm" src="assets/46-browser-fallback.png" alt="Browser fallback screen" width="2152" height="1480" decoding="async">
+    <p class="shotcap">Real screen. URL blacked out — it was a live one-time sign-in link.</p>
+    <ul class="clean">
+      <li>Find the long URL printed in your terminal</li>
+      <li>Copy it and paste it into a browser yourself</li>
+      <li>Authorise there, then paste the code it gives you back into the terminal</li>
+    </ul>
+    <div class="callout">
+      <p class="t">Expected a browser and got a key prompt instead?</p>
+      <p>If <code>ANTHROPIC_API_KEY</code> is set, Claude Code skips the browser and asks you to approve that key instead.</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ============ FIRST SESSION ============ -->
+<section class="slide dark" data-sec="First session" data-title="Section: First session">
+  <div class="inner">
+    <p class="eyebrow">Part Seven</p>
+    <h1>Your first<br>session</h1>
+    <p class="lede">Installed and logged in. Now let's actually use it.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="First session" data-title="Open it in a folder">
+  <div class="inner">
+    <span class="stepnum">1</span>
+    <h2>Start it inside the folder you want to work in</h2>
+    <div class="cmdbox"><pre>cd /path/to/your/project
+claude</pre><button class="cp">Copy</button></div>
+    <p class="lede">Replace <code>/path/to/your/project</code> with your real folder.</p>
+    <div class="callout ok">
+      <p class="t">Shortcut worth knowing</p>
+      <p>Type <code>cd </code> (with a space), then drag the folder from Finder or File Explorer straight into the terminal window. It fills in the path for you — no typing, no typos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="First session" data-title="Trust this folder">
+  <div class="inner">
+    <span class="stepnum">2</span>
+    <h2>"Do you trust the files in this folder?"</h2>
+    <img class="shot" src="assets/49-trust.png" alt="Trust this folder prompt" width="2152" height="1070" decoding="async">
+    <p class="shotcap">The real prompt — read it carefully before answering.</p>
+    <p class="statement" style="font-size:clamp(20px,2.6vw,27px)">Answering yes lets Claude <em>read, edit, and execute</em> files in that folder — and every subfolder inside it.</p>
+    <ul class="clean check">
+      <li>Say yes to folders you know</li>
+      <li>Think twice about client records or credentials</li>
+      <li>Permission modes still gate individual actions</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="First session" data-title="Ask it to look around">
+  <div class="inner">
+    <span class="stepnum">3</span>
+    <h2>Start by asking it to look around</h2>
+    <p class="lede">Before asking for changes, get it oriented. Claude reads your files as needed — you don't attach anything.</p>
+    <div class="cmdbox"><pre>what does this project do?</pre><button class="cp">Copy</button></div>
+    <div class="cmdbox"><pre>explain the folder structure</pre><button class="cp">Copy</button></div>
+    <div class="cmdbox"><pre>what technologies does this project use?</pre><button class="cp">Copy</button></div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="First session" data-title="Ask for something small">
+  <div class="inner">
+    <span class="stepnum">4</span>
+    <h2>Then ask for something small</h2>
+    <div class="cmdbox"><pre>add a hello world function to the main file</pre><button class="cp">Copy</button></div>
+    <p class="lede">In your first session Claude asks before each change. Select <strong>Yes</strong> to approve.</p>
+    <p>After that first session, terminal sessions on Pro, Max, and Team plans start in <strong>Auto</strong> mode, where a classifier reviews actions instead of you. Press <span class="kbd">Shift</span> + <span class="kbd">Tab</span> at any time to cycle permission modes.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="First session" data-title="No project? Fine.">
+  <div class="inner">
+    <p class="eyebrow">If you have nothing to point it at</p>
+    <h2>No project yet? It will build you one.</h2>
+    <div class="cmdbox"><pre>make me a simple webpage that says hello world</pre><button class="cp">Copy</button></div>
+    <div class="cmdbox"><pre>look at the screenshots on my Desktop and rename them based on what's in each image</pre><button class="cp">Copy</button></div>
+    <div class="cmdbox"><pre>I want to build a personal budget tracker. What would I need?</pre><button class="cp">Copy</button></div>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="First session" data-title="Four things that save frustration">
+  <div class="inner">
+    <p class="eyebrow">Terminal survival kit</p>
+    <h2>Four things that will save you frustration</h2>
+    <ul class="clean">
+      <li><strong>You can't click on things.</strong> Use arrow keys to move around.</li>
+      <li><strong>Press <span class="kbd">Esc</span> to interrupt.</strong> If Claude is off in the wrong direction, stop it and redirect — you don't have to wait for it to finish.</li>
+      <li><strong>Type <code>/</code> to see everything available.</strong> Tab completes, and <span class="kbd">↑</span> walks back through your history.</li>
+      <li><strong>Type <code>exit</code> to leave</strong> — or press <span class="kbd">Ctrl</span> + <span class="kbd">D</span> twice on an empty prompt.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ HOW TO ASK ============ -->
+<section class="slide dark" data-sec="How to ask" data-title="Section: How to ask">
+  <div class="inner">
+    <p class="eyebrow">Part Eight</p>
+    <h1>How to phrase<br>requests</h1>
+    <p class="lede">The difference between a frustrating hour and a useful one is almost never the tool. It's the ask.</p>
+  </div>
+</section>
+
+<section class="slide plain wide" data-sec="How to ask" data-title="Four principles">
+  <div class="inner">
+    <h2>Four principles</h2>
+    <table>
+      <tr><th>Principle</th><th>In practice</th></tr>
+      <tr><td>Be specific</td><td>Not "fix the bug" — instead: "fix the login bug where users see a blank screen after entering wrong credentials"</td></tr>
+      <tr><td>Break big work into steps</td><td>"1. create a table for user profiles &nbsp; 2. create an endpoint to get and update them &nbsp; 3. build a page where users can edit their information"</td></tr>
+      <tr><td>Let it explore first</td><td>Ask it to read the folder before you ask it to change anything. Context bought up front pays for itself.</td></tr>
+      <tr><td>Talk to it like a colleague</td><td>Describe the outcome you want, not the keystrokes you imagine it needs. It figures out the path.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="How to ask" data-title="Describe the outcome">
+  <div class="inner">
+    <p class="eyebrow">The mental shift</p>
+    <p class="statement">Describe the outcome, not the keystrokes.</p>
+    <p class="lede">You are not operating software. You are briefing someone competent who happens to work very fast and has no idea what you already know. Tell them what "done" looks like.</p>
+  </div>
+</section>
+
+<!-- ============ COMMANDS ============ -->
+<section class="slide dark" data-sec="Commands" data-title="Section: Commands">
+  <div class="inner">
+    <p class="eyebrow">Part Nine</p>
+    <h1>The commands<br>worth knowing</h1>
+    <p class="lede">Two short lists. You will use maybe five of these regularly.</p>
+  </div>
+</section>
+
+<section class="slide plain wide" data-sec="Commands" data-title="Shell commands">
+  <div class="inner">
+    <p class="eyebrow">Typed in your terminal, to start Claude Code</p>
+    <h2>Shell commands</h2>
+    <table>
+      <tr><th>Command</th><th>What it does</th></tr>
+      <tr><td><code>claude</code></td><td>Start an interactive session</td></tr>
+      <tr><td><code>claude "task"</code></td><td>Start a session with an opening prompt</td></tr>
+      <tr><td><code>claude -p "query"</code></td><td>Run a single query, print the answer, exit</td></tr>
+      <tr><td><code>claude -c</code></td><td>Continue the most recent conversation in this folder</td></tr>
+      <tr><td><code>claude -r</code></td><td>Resume a previous conversation from a list</td></tr>
+      <tr><td><code>claude --version</code></td><td>Print the installed version</td></tr>
+      <tr><td><code>claude doctor</code></td><td>Print installation and configuration diagnostics</td></tr>
+      <tr><td><code>claude update</code></td><td>Apply an update now instead of waiting</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide tint wide" data-sec="Commands" data-title="Session commands">
+  <div class="inner">
+    <p class="eyebrow">Typed inside a running session</p>
+    <h2>Session commands</h2>
+    <table>
+      <tr><th>Command</th><th>What it does</th></tr>
+      <tr><td><code>/help</code></td><td>Show available commands</td></tr>
+      <tr><td><code>/clear</code></td><td>Clear the conversation and start fresh</td></tr>
+      <tr><td><code>/login</code></td><td>Switch accounts or re-authenticate</td></tr>
+      <tr><td><code>/config</code></td><td>Change settings, including the auto-update channel</td></tr>
+      <tr><td><code>/exit</code></td><td>Leave Claude Code (or <span class="kbd">Ctrl</span>+<span class="kbd">D</span> twice)</td></tr>
+    </table>
+    <div class="callout">
+      <p class="t">When in doubt</p>
+      <p>Type <code>/</code> and read the list. It is always current, which is more than any slide can promise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TROUBLESHOOTING ============ -->
+<section class="slide dark" data-sec="Troubleshooting" data-title="Section: Troubleshooting">
+  <div class="inner">
+    <p class="eyebrow">Part Ten</p>
+    <h1>When it<br>breaks</h1>
+    <p class="lede">Nearly every failed install is one of six things. Match the error text you're actually seeing.</p>
+  </div>
+</section>
+
+<section class="slide plain wide" data-sec="Troubleshooting" data-title="Error → fix">
+  <div class="inner">
+    <h2>Error to fix, at a glance</h2>
+    <table>
+      <tr><th>What you see</th><th>What it means &amp; the fix</th></tr>
+      <tr><td><code>command not found: claude</code></td><td>PATH, not a failed install. See the fix slides in Part Four&nbsp;C.</td></tr>
+      <tr><td><code>'irm' is not recognized</code></td><td>You're in CMD running the PowerShell command. Switch shells.</td></tr>
+      <tr><td><code>token '&amp;&amp;' is not valid</code></td><td>You're in PowerShell running the CMD command. Use the <code>irm</code> line.</td></tr>
+      <tr><td><code>dyld: ... built for Mac OS X 13.0</code></td><td>Your macOS is too old. Software Update, then reinstall.</td></tr>
+      <tr><td>HTML in your terminal, or <code>403</code></td><td>The URL returned a web page. Retry; if it persists, check your network and region, then use Homebrew on macOS or WinGet on Windows.</td></tr>
+      <tr><td><code>does not support 32-bit Windows</code></td><td>You opened PowerShell <strong>(x86)</strong>. Open the one without (x86).</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide tint" data-sec="Troubleshooting" data-title="Corporate network">
+  <div class="inner">
+    <p class="eyebrow">If the download itself is blocked</p>
+    <h2>Behind a proxy or firewall</h2>
+    <p class="lede">First find out whether you can reach the download host at all. A first line showing <code>200</code> means you're through:</p>
+    <div class="cmdbox"><pre>curl -sI https://downloads.claude.ai/claude-code-releases/latest</pre><button class="cp">Copy</button></div>
+    <p><strong>403</strong> usually means a proxy or filter is blocking it. <strong>5xx</strong> is normally temporary — wait and retry.</p>
+    <p class="small">On Windows PowerShell, type <code>curl.exe</code> explicitly — PowerShell aliases <code>curl</code> to something that rejects these flags.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Troubleshooting" data-title="Nothing matches">
+  <div class="inner">
+    <p class="eyebrow">If none of that fits</p>
+    <h2>Two moves, in order</h2>
+    <div class="cmdbox"><pre>claude doctor</pre><button class="cp">Copy</button></div>
+    <p class="lede">Run the built-in diagnostic first. It names the problem far more precisely than guessing does.</p>
+    <p>Then check Anthropic's <a href="https://code.claude.com/docs/en/troubleshoot-install" target="_blank" rel="noopener">installation troubleshooting guide</a>, which has an error-to-fix lookup covering every documented failure.</p>
+    <div class="callout ok">
+      <p class="t">And the escape hatch</p>
+      <p>If the terminal keeps fighting you, the <strong>Desktop app</strong> sidesteps this entire class of problem. No PATH, no shell, nothing to configure. There is no prize for winning the terminal argument.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEXT ============ -->
+<section class="slide dark" data-sec="Where next" data-title="Section: Where next">
+  <div class="inner">
+    <p class="eyebrow">Part Eleven</p>
+    <h1>Where to<br>go next</h1>
+    <p class="lede">You're installed and running. These are the things that actually change how much you get out of it.</p>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Where next" data-title="CLAUDE.md">
+  <div class="inner">
+    <p class="eyebrow">The highest-leverage thing you can do</p>
+    <h2>Write a CLAUDE.md file</h2>
+    <p class="lede">Drop a file called <code>CLAUDE.md</code> in your project folder and Claude reads it at the start of every session. Standards, decisions, preferences, things it got wrong last time.</p>
+    <p class="statement" style="font-size:clamp(19px,2.4vw,25px)">This is the single biggest quality difference between someone who has used Claude Code for a week and someone who has used it for a month.</p>
+    <p>You don't have to write it yourself:</p>
+    <div class="cmdbox"><pre>create a CLAUDE.md with instructions for this project</pre><button class="cp">Copy</button></div>
+  </div>
+</section>
+
+<section class="slide tint wide" data-sec="Where next" data-title="It runs in more places">
+  <div class="inner">
+    <p class="eyebrow">Set it up once, it follows you</p>
+    <h2>It runs in more places than the terminal</h2>
+    <table>
+      <tr><th>I want to…</th><th>Use</th></tr>
+      <tr><td>Work without a terminal at all</td><td>The Desktop app</td></tr>
+      <tr><td>Stay inside my editor</td><td>VS Code or JetBrains extensions</td></tr>
+      <tr><td>Run long tasks with nothing installed</td><td><a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> in a browser</td></tr>
+      <tr><td>Automate reviews and triage</td><td>GitHub Actions or GitLab CI/CD</td></tr>
+      <tr><td>Connect Drive, Slack, or internal tools</td><td>MCP servers</td></tr>
+    </table>
+    <p class="small">Every surface runs the same engine. The terminal and Desktop app share your local settings and CLAUDE.md files; web and cloud sessions pick up configuration committed to the repository.</p>
+    <div class="callout">
+      <p class="t">One caution on extensions</p>
+      <p>When installing the VS Code extension, check for the blue verified badge and the publisher <strong>Anthropic</strong>. Copycat extensions exist.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Where next" data-title="Usage limits">
+  <div class="inner">
+    <p class="eyebrow">So it doesn't surprise you</p>
+    <h2>About usage limits</h2>
+    <p class="lede">Every plan has limits, and on a heavy day you can reach them. This is expected, not a fault.</p>
+    <ul class="clean check">
+      <li>It pauses and tells you when the window resets</li>
+      <li><strong>No surprise bill</strong> on a subscription — unless you deliberately enable extra usage or usage credits, which bill separately</li>
+      <li>Switching to a lighter model stretches your budget considerably</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide dark" data-sec="Where next" data-title="Last piece of advice">
+  <div class="inner">
+    <p class="eyebrow">One last thing</p>
+    <p class="statement">Spend your first session on something you already know how to do by hand.</p>
+    <p class="lede">Watching it solve a problem you understand completely is how you calibrate what to trust it with next — and it is a far better use of an hour than trying to make it do something ambitious on day one.</p>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="slide tint" data-sec="Recap" data-title="Your checklist">
+  <div class="inner">
+    <p class="eyebrow">Recap</p>
+    <h2>Your checklist</h2>
+    <ul class="clean check">
+      <li>Paid plan confirmed — Pro, Max, Team, Enterprise, or Console credits</li>
+      <li>OS version checked against the minimums</li>
+      <li>Path chosen — Desktop app or Terminal</li>
+      <li>Installed</li>
+      <li><code>claude --version</code> prints a version number</li>
+      <li>Logged in</li>
+      <li>First session run in a folder you know well</li>
+      <li>You know that <code>claude doctor</code> exists</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide dark" data-sec="Recap" data-title="We'll walk it together">
+  <div class="inner">
+    <p class="gsmark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 22 L40 10 L20 40 L18 26 Z" fill="#12B886"/></svg>Glide&nbsp;Slope&nbsp;AI <span class="dom">glide-slope.ai</span></p>
+    <h1>Stuck anywhere?<br>Don't push through it.</h1>
+    <p class="lede">Getting unstuck takes about ninety seconds with someone helping you land the plane. Note the exact error text you saw and we'll pick it up on the call.</p>
+    <div class="brandcard">
+      <img src="assets/wz-headshot.png" alt="William Zimmerman" width="640" height="640">
+      <div class="who">
+        <span class="nm">William Zimmerman</span>
+        <span class="rl">AI for PE, Hold Cos &amp; Strategics</span><br>
+        Wayne, Pennsylvania<br>
+        <a href="mailto:wzimmerman@traceablemedia.com">wzimmerman@traceablemedia.com</a><br>
+        <span class="dba">(Glide Slope AI is a DBA of Traceable Media LLC.)</span><br>
+        610-613-5926<br>
+        <a href="https://glide-slope.ai" target="_blank" rel="noopener">glide-slope.ai</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide plain" data-sec="Recap" data-title="Sources">
+  <div class="inner">
+    <p class="eyebrow">For the record</p>
+    <h2>Where all of this comes from</h2>
+    <p class="lede">Every command, requirement, error message, and fix in this deck is taken from Anthropic's official Claude Code documentation. Nothing is invented or recalled from memory.</p>
+    <ul class="clean">
+      <li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Advanced setup</a> — requirements, install methods, updates</li>
+      <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart</a> — login, first session, command tables</li>
+      <li><a href="https://code.claude.com/docs/en/terminal-guide" target="_blank" rel="noopener">Terminal guide for new users</a> — opening a terminal, PowerShell vs CMD</li>
+      <li><a href="https://code.claude.com/docs/en/troubleshoot-install" target="_blank" rel="noopener">Troubleshoot installation and login</a> — every fix in Part Ten</li>
+      <li><a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Desktop app quickstart</a> — Path A and permission modes</li>
+    </ul>
+    <div class="callout">
+      <p class="t">One caveat worth stating plainly</p>
+      <p>Claude Code ships updates constantly. If any step here disagrees with the live documentation at <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a>, the live documentation is right and this deck is stale. Every link and screenshot here was verified on <strong>27 August 2026</strong>.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="scrollcue" id="scrollcue">Scroll for more ↓</div>
+<div id="nav">
+  <div style="display:flex;align-items:center;gap:8px"><button class="navbtn" id="start" title="Back to the first slide (Home)">⌂ Start</button><button class="navbtn" id="prev">← Back</button></div>
+  <div class="navmid">
+    <span class="hint">Arrow keys to move · <span class="kbd">O</span> for all slides</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span id="counter">1 / 1</span>
+    <button class="navbtn primary" id="next">Next →</button>
+  </div>
+</div>
+
+<div id="overview">
+  <div id="ovhead">
+    <h4>All slides — click to jump</h4>
+    <button class="navbtn" id="ovclose">Close (Esc)</button>
+  </div>
+  <div id="ovgrid"></div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var cur = 0;
+  var progress = document.getElementById('progress');
+  var counter  = document.getElementById('counter');
+  var seclabel = document.getElementById('sectionlabel');
+  var nav      = document.getElementById('nav');
+  var prevBtn  = document.getElementById('prev');
+  var nextBtn  = document.getElementById('next');
+  var overview = document.getElementById('overview');
+  var ovgrid   = document.getElementById('ovgrid');
+
+  function show(i, push){
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function(s){ s.classList.remove('on'); });
+    var s = slides[i];
+    s.classList.add('on');
+    s.scrollTop = 0;
+    cur = i;
+    progress.style.width = ((i+1)/slides.length*100) + '%';
+    counter.textContent = (i+1) + ' / ' + slides.length;
+    seclabel.textContent = s.dataset.sec || '';
+    var dark = s.classList.contains('dark');
+    document.body.classList.toggle('darkslide', dark);
+    nav.classList.toggle('dark', dark);
+    seclabel.style.color = dark ? '#8FA3BE' : '';
+    document.querySelector('#topbar .brandline').style.color = dark ? '#8FA3BE' : '';
+    prevBtn.disabled = (i === 0);
+    startBtn.style.visibility = (i === 0) ? 'hidden' : 'visible';
+    nextBtn.disabled = (i === slides.length - 1);
+    var cue = document.getElementById('scrollcue');
+    setTimeout(function(){ cue.classList.toggle('on', s.scrollHeight - s.clientHeight > 8 && s.scrollTop < 6); }, 60);
+    s.onscroll = function(){ cue.classList.toggle('on', s.scrollHeight - s.clientHeight > 8 && s.scrollTop < 6); };
+    if (push !== false) history.replaceState(null, '', '#' + (i+1));
+    renderOv();
+  }
+
+  function renderOv(){
+    if (!overview.classList.contains('on')) return;
+    var html = '', lastSec = null;
+    slides.forEach(function(s, i){
+      var sec = s.dataset.sec || '';
+      if (sec !== lastSec){ html += '<div class="ovsec">' + sec + '</div>'; lastSec = sec; }
+      html += '<div class="ovcard' + (i===cur?' cur':'') + '" data-i="' + i + '">'
+            + '<div class="n">' + (i+1) + '</div>'
+            + '<div class="t">' + (s.dataset.title || '') + '</div></div>';
+    });
+    ovgrid.innerHTML = html;
+  }
+  function openOv(){ overview.classList.add('on'); renderOv();
+    var c = ovgrid.querySelector('.ovcard.cur'); if (c) c.scrollIntoView({block:'center'}); }
+  function closeOv(){ overview.classList.remove('on'); }
+
+  ovgrid.addEventListener('click', function(e){
+    var card = e.target.closest('.ovcard');
+    if (!card) return;
+    closeOv();
+    show(parseInt(card.dataset.i, 10));
+  });
+  document.getElementById('ovclose').addEventListener('click', closeOv);
+  counter.addEventListener('click', function(){ overview.classList.contains('on') ? closeOv() : openOv(); });
+  var startBtn=document.getElementById('start');
+  var homeBtn=document.getElementById('tohome');
+  startBtn.addEventListener('click', function(){ show(0); });
+  homeBtn.addEventListener('click', function(){ show(0); });
+  prevBtn.addEventListener('click', function(){ show(cur-1); });
+  nextBtn.addEventListener('click', function(){ show(cur+1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (overview.classList.contains('on')){
+      if (k === 'Escape' || k === 'o' || k === 'O'){ e.preventDefault(); closeOv(); }
+      return;
+    }
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' '){ e.preventDefault(); show(cur+1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); show(cur-1); }
+    else if (k === 'Home'){ e.preventDefault(); show(0); }
+    else if (k === 'End'){ e.preventDefault(); show(slides.length-1); }
+    else if (k === 'o' || k === 'O'){ e.preventDefault(); openOv(); }
+  });
+
+  // swipe — axis-locked, and disabled inside scrollers / the overview
+  var x0 = null, y0 = null, axis = null, live = false;
+  function inScroller(el){
+    while (el && el !== document.body){
+      if (el.id === 'overview') return true;
+      var cs = getComputedStyle(el);
+      if (/(auto|scroll)/.test(cs.overflowX) && el.scrollWidth > el.clientWidth + 2) return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
+  function endSwipe(){ x0 = y0 = null; axis = null; live = false; }
+  document.addEventListener('touchstart', function(e){
+    if (overview.classList.contains('on') || e.touches.length !== 1 || inScroller(e.target)){ endSwipe(); return; }
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; axis = null; live = true;
+  }, {passive:true});
+  document.addEventListener('touchmove', function(e){
+    if (!live || x0 === null) return;
+    var dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
+    if (axis === null && (Math.abs(dx) > 10 || Math.abs(dy) > 10))
+      axis = Math.abs(dx) > Math.abs(dy) * 1.5 ? 'x' : 'y';   // vertical scroll wins ties
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (!live || x0 === null){ endSwipe(); return; }
+    var dx = e.changedTouches[0].clientX - x0;
+    if (axis === 'x' && Math.abs(dx) > 55) show(cur + (dx < 0 ? 1 : -1));
+    endSwipe();
+  }, {passive:true});
+  document.addEventListener('touchcancel', endSwipe, {passive:true});
+
+  // copy buttons
+  document.querySelectorAll('.cmdbox .cp').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var txt = btn.parentElement.querySelector('pre').innerText;
+      navigator.clipboard.writeText(txt).then(function(){
+        btn.textContent = 'Copied'; btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+      });
+    });
+  });
+
+  var start = parseInt((location.hash || '').replace('#',''), 10);
+  show(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>
