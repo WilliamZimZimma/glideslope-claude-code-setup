@@ -437,7 +437,7 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
     </ul>
     <div class="callout">
       <p class="t">You will not break anything</p>
-      <p>Claude Code asks permission before it touches a single file. Nothing on this walkthrough is destructive, and every step is reversible.</p>
+      <p>By default, Claude asks before edits and commands. You control this through permission modes. Nothing on this walkthrough is destructive, and every step is reversible.</p>
     </div>
   </div>
 </section>
@@ -480,7 +480,8 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
   <div class="inner">
     <p class="eyebrow">If you remember one thing</p>
     <p class="statement">Every other AI gives you advice. This one hands you finished work.</p>
-    <p class="lede">You describe the outcome in plain English. Claude Code does the work right on your machine — and checks with you before it changes anything.</p>
+    <p class="lede">You describe the outcome in plain English. Claude Code does the work right on your machine — and by default it asks before it edits a file or runs a command.</p>
+    <p class="small">It reads files without asking. Some permission modes automatically approve edits and other actions — you choose which mode you are in.</p>
   </div>
 </section>
 
@@ -551,7 +552,7 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
     <ul class="clean cross">
       <li><strong>Node.js</strong> — not required. The installer ships a standalone program (a compiled binary, not JavaScript).</li>
       <li><strong>Python</strong> — not required.</li>
-      <li><strong>Git</strong> — optional for the <em>Terminal</em> install, even on Windows, where it just gives Claude a better shell. It <em>is</em> required for local sessions in the Windows Desktop app.</li>
+      <li><strong>Git</strong> — optional for the <em>Terminal</em> install, even on Windows, where it just gives Claude a better shell. It <em>is</em> required for local sessions in the Windows Claude Desktop app.</li>
       <li><strong>Administrator access</strong> — the docs say plainly you do not need to run as Administrator.</li>
     </ul>
     <div class="callout ok">
@@ -601,7 +602,7 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
 <section class="slide plain wide" data-sec="Pick your path" data-title="The two paths">
   <div class="inner">
     <h2>Two doors, same engine</h2>
-    <p class="lede">Both run the same engine, the same model, and the same settings. Only the interface differs. We'll walk the Terminal first — once you've landed that, the app is basically a download and a sign-in.</p>
+    <p class="lede">They use the same core Claude Code engine. The two interfaces expose different controls and workflows, so choose the one that best fits how you work. We'll walk the Terminal first — once you've landed that, the Claude Desktop app is basically a download and a sign-in.</p>
     <div class="grid2">
       <div class="card hi">
         <p class="tag">We'll start here together</p>
@@ -615,7 +616,7 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
       </div>
       <div class="card">
         <p class="tag">The familiar road</p>
-        <h3>B — The Desktop App</h3>
+        <h3>B — The Claude Desktop App</h3>
         <p>A normal application with buttons, panels, and a visual review screen. No terminal at any point.</p>
         <ul class="clean">
           <li>Download, double-click, sign in, done</li>
@@ -630,15 +631,15 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
 <section class="slide tint" data-sec="Pick your path" data-title="You only need one">
   <div class="inner">
     <p class="eyebrow">Do I need both? Is one more powerful?</p>
-    <p class="statement">You only need one — and neither is more powerful.</p>
-    <p class="lede">Same engine, same model, same abilities either way. Pick whichever fits how you work today — and once you're comfortable, it's worth trying the other one. Going a little outside your comfort zone here is exactly how the terminal stops feeling off-limits.</p>
+    <p class="statement">You only need one to get started.</p>
+    <p class="lede">They use the same core Claude Code engine. Choose the interface that best fits your workflow — and once you're comfortable, it's worth trying the other one. Going a little outside your comfort zone here is exactly how the terminal stops feeling off-limits.</p>
     <div class="callout">
       <p class="t">The one thing that is genuinely different</p>
-      <p>The Desktop app does <strong>not</strong> install the <code>claude</code> terminal command — so <code>claude --version</code> and <code>claude doctor</code> only exist if you also do the Terminal install. Adding either one later takes about ninety seconds.</p>
+      <p>The Claude Desktop app does <strong>not</strong> install the <code>claude</code> terminal command — so <code>claude --version</code> and <code>claude doctor</code> only exist if you also do the Terminal install. Adding either one later takes usually only a couple of minutes.</p>
     </div>
     <div class="callout">
       <p class="t">Where to go next in this deck</p>
-      <p>Terminal → the next slides.<br>Desktop app → skip ahead to <strong>Part Four&nbsp;B</strong> using the slide overview (press <span class="kbd">O</span>).</p>
+      <p>Terminal → the next slides.<br>Claude Desktop app → skip ahead to <strong>Part Four&nbsp;B</strong> using the slide overview (press <span class="kbd">O</span>).</p>
     </div>
   </div>
 </section>
@@ -648,7 +649,7 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
   <div class="inner">
     <p class="eyebrow">Part Four A</p>
     <h1>Install the<br>Terminal version</h1>
-    <p class="lede">One command. The next few slides show it on Mac, then on Windows. Chose the Desktop app instead? Jump ahead to Part Four&nbsp;B.</p>
+    <p class="lede">One command. The next few slides show it on Mac, then on Windows. Chose the Claude Desktop app instead? Jump ahead to Part Four&nbsp;B.</p>
   </div>
 </section>
 
@@ -669,10 +670,11 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
 <section class="slide tint" data-sec="Path A · Terminal" data-title="Mac — the install command">
   <div class="inner">
     <span class="stepnum">2</span>
-    <h2>Paste the install command</h2>
-    <p class="lede">Copy this, paste it into the terminal with <span class="kbd">Cmd</span> + <span class="kbd">V</span>, and press Enter.</p>
+    <h2>Paste one command</h2>
+    <p class="lede">Click <strong>Copy</strong>, paste the entire line into Terminal with <span class="kbd">Cmd</span> + <span class="kbd">V</span>, and press <span class="kbd">Return</span>.</p>
+    <p class="lede"><strong>Paste the whole line — it is one command.</strong></p>
     <div class="cmdbox"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button class="cp">Copy</button></div>
-    <p class="small">On Linux, paste with <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">V</span>. This same command works on macOS, Ubuntu/Debian, and WSL&nbsp;2. Alpine needs extra packages first, and WSL&nbsp;1 may need Anthropic's documented workaround.</p>
+    <p class="small">Prefer not to use Terminal? Install the Claude Desktop app instead — see Part Four&nbsp;B. On Linux, paste with <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">V</span>. This same command works on macOS, Ubuntu/Debian, and WSL&nbsp;2. Alpine needs extra packages first, and WSL&nbsp;1 may need Anthropic's documented workaround.</p>
   </div>
 </section>
 
@@ -760,8 +762,8 @@ body.darkslide .scrollcue{background:rgba(19,45,83,.94);border-color:rgba(255,25
     <p class="lede">Git for Windows gives Claude Code a proper shell. Without it, it falls back to PowerShell — which works, just less well.</p>
     <ul class="clean">
       <li>Download from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a></li>
-      <li>Click Next through every screen — every default is correct</li>
-      <li>You will never have to learn Git yourself</li>
+      <li>The defaults normally work. Make sure the option to add Git to PATH remains selected.</li>
+      <li>You do not need to know Git to get started.</li>
     </ul>
     <img class="shot sm" src="assets/32-gitwin.png" alt="git-scm.com/downloads/win" width="2560" height="1720" decoding="async">
     <p class="shotcap">The live download page.</p>
@@ -868,7 +870,7 @@ source ~/.zshrc</pre><button class="cp">Copy</button></div>
 <section class="slide dark" data-sec="Path B · Desktop" data-title="Section: Path B — Desktop">
   <div class="inner">
     <p class="eyebrow">Part Four B</p>
-    <h1>Install the<br>Desktop app</h1>
+    <h1>Install the<br>Claude Desktop app</h1>
     <p class="lede">Five steps, no terminal. Already did the Terminal install? This whole part is optional — add the app whenever you like.</p>
   </div>
 </section>
@@ -920,7 +922,7 @@ source ~/.zshrc</pre><button class="cp">Copy</button></div>
       </div>
       <div class="appbody">
         <div class="approw"><span class="appchip">Local</span> Work on files on this computer</div>
-        <div class="approw"><span class="appchip" style="background:#EEF2F7;color:#4A6285">Cloud</span> Run on Anthropic's machines instead</div>
+        <div class="approw"><span class="appchip" style="background:#EEF2F7;color:#4A6285">Remote</span> Run on Anthropic-hosted infrastructure</div>
       </div>
     </div>
     <p class="small">Illustration of the layout — your window will show your own account and projects.</p>
@@ -942,7 +944,7 @@ source ~/.zshrc</pre><button class="cp">Copy</button></div>
     </div>
     <div class="callout">
       <p class="t">Windows only</p>
-      <p>Local sessions need <strong>Git for Windows</strong> installed. Download it from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a> and click Next through every screen — the defaults are correct. Most Macs already include Git, so Mac users skip this.</p>
+      <p>Local sessions need <strong>Git for Windows</strong> installed. Download it from <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a> and run the installer. The defaults normally work — make sure the option to add Git to PATH remains selected. Most Macs already include Git, so Mac users skip this.</p>
     </div>
   </div>
 </section>
@@ -974,23 +976,23 @@ source ~/.zshrc</pre><button class="cp">Copy</button></div>
   <div class="inner">
     <p class="eyebrow">The setting that matters most</p>
     <h2>Understanding permission modes</h2>
-    <p class="lede">This governs how much Claude does before checking with you. It is in the selector next to the send button, and you can change it at any moment.</p>
+    <p class="lede">This governs how much Claude does before checking with you. It is in the selector next to the send button, and you can change it at any moment. Claude reads files without asking in every mode; what changes is how much it does before asking you.</p>
     <table>
       <tr><th>Mode</th><th>What happens</th><th>Use when</th></tr>
-      <tr><td>Manual</td><td>Claude proposes each change and waits. Your files are untouched until you accept.</td><td>You're new, or the work is delicate</td></tr>
-      <tr><td>Auto</td><td>A classifier reviews actions in the background and blocks risky ones instead of asking you.</td><td>Day-to-day work, once you trust it</td></tr>
-      <tr><td>Accept edits</td><td>File edits are auto-accepted for faster iteration.</td><td>Rapid back-and-forth on one file</td></tr>
-      <tr><td>Plan</td><td>Claude proposes an approach and edits nothing at all.</td><td>Before any large or risky change</td></tr>
+      <tr><td>Ask permissions</td><td>Claude proposes each change and waits. Your files are untouched until you accept.</td><td>You're new, or the work is delicate</td></tr>
+      <tr><td>Edit automatically<br><span class="small">Accept edits</span></td><td>File edits are auto-accepted for faster iteration.</td><td>Rapid back-and-forth on one file</td></tr>
+      <tr><td>Plan mode</td><td>Claude proposes an approach and edits nothing at all.</td><td>Before any large or risky change</td></tr>
+      <tr><td>Auto mode<br><span class="small">where available</span></td><td>A classifier reviews actions in the background and blocks risky ones instead of asking you.</td><td>Day-to-day work, once you trust it</td></tr>
     </table>
   </div>
 </section>
 
-<section class="slide dark" data-sec="Path B · Desktop" data-title="Start in Manual">
+<section class="slide dark" data-sec="Path B · Desktop" data-title="Start in Ask permissions">
   <div class="inner">
     <p class="eyebrow">Our recommendation</p>
-    <p class="statement">Start in Manual for your first few sessions.</p>
-    <p class="lede">Watching it ask permission — and seeing exactly what it wanted to do before it did it — is how you build an accurate sense of what this thing is capable of. Switch to Auto once that instinct is there.</p>
-    <p class="small">Desktop path complete — you are running. Verify the Desktop way: open the <strong>Code</strong> tab, pick a folder, start a session. <strong>Part Five uses <code>claude --version</code> and <code>claude doctor</code>, which are Terminal-only</strong> — the Desktop app does not install the terminal command. Hop back to Part Four&nbsp;A if you also want the CLI (about ninety seconds), or jump ahead to <strong>Part Eight — How to phrase requests</strong>, which applies everywhere.</p>
+    <p class="statement">Start in Ask permissions mode for your first few sessions.</p>
+    <p class="lede">Watching it ask permission — and seeing exactly what it wanted to do before it did it — is how you build an accurate sense of what this thing is capable of. Move to a faster mode once that instinct is there.</p>
+    <p class="small">Desktop path complete — you are running. Verify the Desktop way: open the <strong>Code</strong> tab, pick a folder, start a session. <strong>Part Five uses <code>claude --version</code> and <code>claude doctor</code>, which are Terminal-only</strong> — the Claude Desktop app does not install the terminal command. Hop back to Part Four&nbsp;A if you also want the CLI (usually only a couple of minutes), or jump ahead to <strong>Part Eight — How to phrase requests</strong>, which applies everywhere.</p>
   </div>
 </section>
 
@@ -1088,12 +1090,16 @@ source ~/.zshrc</pre><button class="cp">Copy</button></div>
   <div class="inner">
     <span class="stepnum">1</span>
     <h2>Start it inside the folder you want to work in</h2>
-    <div class="cmdbox"><pre>cd /path/to/your/project
-claude</pre><button class="cp">Copy</button></div>
-    <p class="lede">Replace <code>/path/to/your/project</code> with your real folder.</p>
+    <p class="lede">Do not type the folder path. Drag the folder in and let the terminal fill it for you.</p>
+    <ul class="clean">
+      <li><strong>1.</strong> Type <code>cd</code> followed by a space.</li>
+      <li><strong>2.</strong> Drag the project folder from Finder or File Explorer straight into the terminal window.</li>
+      <li><strong>3.</strong> Press <span class="kbd">Enter</span>.</li>
+      <li><strong>4.</strong> Type <code>claude</code> and press <span class="kbd">Enter</span>.</li>
+    </ul>
     <div class="callout ok">
-      <p class="t">Shortcut worth knowing</p>
-      <p>Type <code>cd </code> (with a space), then drag the folder from Finder or File Explorer straight into the terminal window. It fills in the path for you — no typing, no typos.</p>
+      <p class="t">Why the drag</p>
+      <p>It fills in the exact path for you — no typing and no typos — and it works the same way on macOS, Windows, and Linux.</p>
     </div>
   </div>
 </section>
@@ -1130,7 +1136,7 @@ claude</pre><button class="cp">Copy</button></div>
     <h2>Then ask for something small</h2>
     <div class="cmdbox"><pre>add a hello world function to the main file</pre><button class="cp">Copy</button></div>
     <p class="lede">In your first session Claude asks before each change. Select <strong>Yes</strong> to approve.</p>
-    <p>After that first session, terminal sessions on Pro, Max, and Team plans start in <strong>Auto</strong> mode, where a classifier reviews actions instead of you. Press <span class="kbd">Shift</span> + <span class="kbd">Tab</span> at any time to cycle permission modes.</p>
+    <p>Permission behavior depends on the mode you select. Press <span class="kbd">Shift</span> + <span class="kbd">Tab</span> to cycle through the modes available to your account: <strong>Ask permissions</strong>, <strong>Edit automatically / Accept edits</strong>, <strong>Plan mode</strong>, and <strong>Auto mode</strong> where your account has it.</p>
   </div>
 </section>
 
@@ -1139,7 +1145,7 @@ claude</pre><button class="cp">Copy</button></div>
     <p class="eyebrow">If you have nothing to point it at</p>
     <h2>No project yet? It will build you one.</h2>
     <div class="cmdbox"><pre>make me a simple webpage that says hello world</pre><button class="cp">Copy</button></div>
-    <div class="cmdbox"><pre>look at the screenshots on my Desktop and rename them based on what's in each image</pre><button class="cp">Copy</button></div>
+    <div class="cmdbox"><pre>look at the screenshots in this folder and rename them based on what's in each image</pre><button class="cp">Copy</button></div>
     <div class="cmdbox"><pre>I want to build a personal budget tracker. What would I need?</pre><button class="cp">Copy</button></div>
   </div>
 </section>
@@ -1277,7 +1283,7 @@ claude</pre><button class="cp">Copy</button></div>
     <p>Then check Anthropic's <a href="https://code.claude.com/docs/en/troubleshoot-install" target="_blank" rel="noopener">installation troubleshooting guide</a>, which has an error-to-fix lookup covering every documented failure.</p>
     <div class="callout ok">
       <p class="t">And the escape hatch</p>
-      <p>If the terminal keeps fighting you, the <strong>Desktop app</strong> sidesteps this entire class of problem. No PATH, no shell, nothing to configure. There is no prize for winning the terminal argument.</p>
+      <p>If the terminal keeps fighting you, the <strong>Claude Desktop app</strong> sidesteps this entire class of problem — it avoids Claude CLI and PATH setup altogether. On Windows, local sessions still require Git for Windows. There is no prize for winning the terminal argument.</p>
     </div>
   </div>
 </section>
@@ -1296,7 +1302,7 @@ claude</pre><button class="cp">Copy</button></div>
     <p class="eyebrow">The highest-leverage thing you can do</p>
     <h2>Write a CLAUDE.md file</h2>
     <p class="lede">Drop a file called <code>CLAUDE.md</code> in your project folder and Claude reads it at the start of every session. Standards, decisions, preferences, things it got wrong last time.</p>
-    <p class="statement" style="font-size:clamp(19px,2.4vw,25px)">This is the single biggest quality difference between someone who has used Claude Code for a week and someone who has used it for a month.</p>
+    <p class="statement" style="font-size:clamp(19px,2.4vw,25px)">A concise CLAUDE.md is one of the highest-leverage ways to improve results across sessions.</p>
     <p>You don't have to write it yourself:</p>
     <div class="cmdbox"><pre>create a CLAUDE.md with instructions for this project</pre><button class="cp">Copy</button></div>
   </div>
@@ -1308,13 +1314,13 @@ claude</pre><button class="cp">Copy</button></div>
     <h2>It runs in more places than the terminal</h2>
     <table>
       <tr><th>I want to…</th><th>Use</th></tr>
-      <tr><td>Work without a terminal at all</td><td>The Desktop app</td></tr>
+      <tr><td>Work without a terminal at all</td><td>The Claude Desktop app</td></tr>
       <tr><td>Stay inside my editor</td><td>VS Code or JetBrains extensions</td></tr>
       <tr><td>Run long tasks with nothing installed</td><td><a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> in a browser</td></tr>
       <tr><td>Automate reviews and triage</td><td>GitHub Actions or GitLab CI/CD</td></tr>
       <tr><td>Connect Drive, Slack, or internal tools</td><td>MCP servers</td></tr>
     </table>
-    <p class="small">Every surface runs the same engine. The terminal and Desktop app share your local settings and CLAUDE.md files; web and cloud sessions pick up configuration committed to the repository.</p>
+    <p class="small">Every surface runs the same engine. The terminal and Claude Desktop app share your local settings and CLAUDE.md files; web and cloud sessions pick up configuration committed to the repository.</p>
     <div class="callout">
       <p class="t">One caution on extensions</p>
       <p>When installing the VS Code extension, check for the blue verified badge and the publisher <strong>Anthropic</strong>. Copycat extensions exist.</p>
@@ -1351,9 +1357,9 @@ claude</pre><button class="cp">Copy</button></div>
     <ul class="clean check">
       <li>Paid plan confirmed — Pro, Max, Team, Enterprise, or Console credits</li>
       <li>OS version checked against the minimums</li>
-      <li>Path chosen — Terminal or Desktop app</li>
+      <li>Path chosen — Terminal or Claude Desktop app</li>
       <li>Installed</li>
-      <li>Confirmed working — <code>claude --version</code> prints a version number (Terminal), or the Code tab starts a session (Desktop app)</li>
+      <li>Confirmed working — <code>claude --version</code> prints a version number (Terminal), or the Code tab starts a session (Claude Desktop app)</li>
       <li>Logged in</li>
       <li>First session run in a folder you know well</li>
       <li>You know that <code>claude doctor</code> exists</li>
@@ -1365,7 +1371,7 @@ claude</pre><button class="cp">Copy</button></div>
   <div class="inner">
     <p class="gsmark"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 22 L40 10 L20 40 L18 26 Z" fill="#12B886"/></svg>Glide&nbsp;Slope&nbsp;AI <span class="dom">glide-slope.ai</span></p>
     <h1>Stuck anywhere?<br>Don't push through it.</h1>
-    <p class="lede">Getting unstuck takes about ninety seconds with someone helping you land the plane. Note the exact error text you saw and we'll pick it up on the call.</p>
+    <p class="lede">Getting unstuck takes usually only a couple of minutes with someone helping you land the plane. Note the exact error text you saw and we'll pick it up on the call.</p>
     <div class="brandcard">
       <img src="assets/wz-headshot.png" alt="William Zimmerman" width="640" height="640">
       <div class="who">
@@ -1391,7 +1397,7 @@ claude</pre><button class="cp">Copy</button></div>
       <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart</a> — login, first session, command tables</li>
       <li><a href="https://code.claude.com/docs/en/terminal-guide" target="_blank" rel="noopener">Terminal guide for new users</a> — opening a terminal, PowerShell vs CMD</li>
       <li><a href="https://code.claude.com/docs/en/troubleshoot-install" target="_blank" rel="noopener">Troubleshoot installation and login</a> — every fix in Part Ten</li>
-      <li><a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Desktop app quickstart</a> — Path B and permission modes</li>
+      <li><a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Claude Desktop app quickstart</a> — Path B and permission modes</li>
     </ul>
     <div class="callout">
       <p class="t">One caveat worth stating plainly</p>
